@@ -68,6 +68,14 @@ function handleError(res, err) {
 }
 
 var yahooFinance = require('yahoo-finance');
+var twitter = require('twitter');
+
+var client = new twitter({
+  consumer_key: 'DLIgci0tLnFkRbJ8MCdbp1T8g',
+  consumer_secret: 'p9OuQWzstr09UFG0i86gH9TpeofnRiYaAKDQBf7PYVC6NWGuD7',
+  access_token_key: '526390388-NQfg0jStetPZ7MevxnLcYhweiYs10rouEgVOi0KZ',
+  access_token_secret: 'ihm3MHXD7AWj9fbnKgXDd5WxEHJ4V5aGCEvul8iduEzNm'
+});
 
 exports.quote = function(req, res) {
   yahooFinance.historical({
@@ -82,6 +90,22 @@ exports.quote = function(req, res) {
   });
     
 };
+
+exports.twitter = function(req, res){
+    /*client.stream('statuses/filter', {track: req.params.keyword},  function(stream){
+      stream.on('data', function(tweet) {
+        console.log(tweet.text);
+      });
+
+      stream.on('error', function(error) {
+        console.log(error);
+      });
+    });*/
+
+    client.get('search/tweets', {q: req.params.keyword}, function(error, tweets, response){
+      return res.json(200, tweets);
+    });
+}
 
 function formatDate(date) {
     var d = new Date(date),

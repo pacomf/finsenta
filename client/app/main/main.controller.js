@@ -9,6 +9,17 @@ angular.module('finsentaApp')
       $scope.awesomeThings = awesomeThings;
     });
 
+    var keywordTweets = "ibex35, caixa"
+    var urlTweet = "https://twitter.com/statuses/"
+
+    $http.get('/api/things/tweets/'+ keywordTweets).success(function(tweets) {
+        $scope.tweets = tweets.statuses;
+        /*for (var i in tweets.statuses){
+          var url = urlTweet+tweets.statuses[i].id_str;
+          console.log(tweets.statuses[i].text);
+        }*/
+    });
+
     var companyID = 'CABK.MC';
     var companyName = "Caixa Bank";
 

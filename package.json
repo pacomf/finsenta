@@ -17,7 +17,8 @@
     "mongoose": "~3.8.8",
     "composable-middleware": "^0.3.0",
     "connect-mongo": "^0.4.1",
-    "yahoo-finance": "~0.2.11"
+    "yahoo-finance": "~0.2.11",
+    "twitter": "~1.2.5"
   },
   "devDependencies": {
     "grunt": "~0.4.4",

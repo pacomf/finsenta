@@ -9,3 +9,13 @@
 
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
+<div ng-repeat="tweet in tweets" class="tweet-item">
+
+  <div class="tweet-details">
+  	<p>{{tweet.user.screen_name}}</p>
+  	<a href="https://twitter.com/statuses/{{tweet.id_str}}" target="_blank">
+	    <p>{{tweet.text}}</p>
+	</a>
+  </div>
+</div>
+
