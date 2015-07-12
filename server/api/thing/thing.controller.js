@@ -80,7 +80,7 @@ var client = new twitter({
 exports.quote = function(req, res) {
   yahooFinance.historical({
     symbol: req.params.id,
-    from: '2014-01-01',
+    from: '2015-07-01',
     to: formatDate(new Date()),
     // period: 'd'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only)
   }, function (err, quotes) {
@@ -110,11 +110,11 @@ exports.twitter = function(req, res){
       });
     });*/
 
-    /*var UserValue = require('../sentiment/uservalue.model');
+    var UserValue = require('../sentiment/uservalue.model');
     var KeyGroup = require('../sentiment/keygroup.model');
     var KeyData = require('../sentiment/keydata.model');
     var Value = require('../sentiment/value.model');
-
+/*
 
     var KeyGroup = require('../sentiment/keygroup.model');
     var Query = require('../sentiment/query.model');
@@ -144,6 +144,9 @@ exports.twitter = function(req, res){
         for (var i = keyg.keyData.length - 1; i >= 0; i--) {
           KeyData.findById(keyg.keyData[i], function(err, keyd) {
             //AnalysisController.readRss(keyd._id, keyd.keyData, userv.value, userv.query);    
+            //var initDate = new Date();
+            //var endDate = new Date();
+            //AnalysisController.getDataByQueryId(userv.query, initDate.setDate(initDate.getDate()-5), endDate)
           })
         };
         
@@ -151,31 +154,17 @@ exports.twitter = function(req, res){
 
     });*/
 
-    var ImportController = require('../import/import.controller');
+    /*var ImportController = require('../import/import.controller');
 
     ImportController.importData('./import.json');
 
     client.get('search/tweets', {q: req.params.keyword}, function(error, tweets, response){
       return res.json(200, tweets);
-    });
-
+    });*/
     
 }
 
-exports.alchemy = function(req, res){
-  var text = req.body.text;
-  var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
-  var alchemyapi = new AlchemyAPI();
-  alchemyapi.sentiment("text", text, {}, function(response) {
-    console.log("Sentiment: " + response["docSentiment"]["type"]);
-    // response["docSentiment"]["type"] = [positive, negative, neutral]
-    return res.json(200, 'ok');
-  });
-}
 
-exports.rss = function(req, res){
-  //readRss('http://www.elblogsalmon.com/index.xml', "acs", "grecia");
-}
 
 function formatDate(date) {
     var d = new Date(date),

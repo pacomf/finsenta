@@ -5,8 +5,11 @@ var keyDataController = require('./keydata.controller');
 var queryController = require('./query.controller');
 var keyGroupController = require('./keygroup.controller');
 var searchResultController = require('./searchresult.controller');
+var analysisController = require('./analysis.controller');
 
 var router = express.Router();
+
+router.get('/sentimental', analysisController.sentimentalAnalysis);
 
 // KeyData routes
 var keyDataPath = '/keydata';
@@ -39,5 +42,6 @@ router.post(searchResultPath, searchResultController.create);
 router.put(searchResultPath + '/:id', searchResultController.update);
 router.patch(searchResultPath + '/:id', searchResultController.update);
 router.delete(searchResultPath + '/:id', searchResultController.destroy);
+
 
 module.exports = router;
