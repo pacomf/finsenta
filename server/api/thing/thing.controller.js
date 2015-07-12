@@ -110,13 +110,13 @@ exports.twitter = function(req, res){
       });
     });*/
 
-    var UserValue = require('../sentiment/uservalue.model');
+    /*var UserValue = require('../sentiment/uservalue.model');
     var KeyGroup = require('../sentiment/keygroup.model');
     var KeyData = require('../sentiment/keydata.model');
     var Value = require('../sentiment/value.model');
 
 
-    /*var KeyGroup = require('../sentiment/keygroup.model');
+    var KeyGroup = require('../sentiment/keygroup.model');
     var Query = require('../sentiment/query.model');
     var SearchResult = require('../sentiment/searchresult.model');
     var UserValue = require('../sentiment/uservalue.model');
@@ -133,7 +133,7 @@ exports.twitter = function(req, res){
     var user = new UserValue();
     user.save();*/
 
-    var AnalysisController = require('../sentiment/analysis.controller');
+    /*var AnalysisController = require('../sentiment/analysis.controller');
 
     var value = new Value();
     value.name = "ValueName";
@@ -149,9 +149,11 @@ exports.twitter = function(req, res){
         
       });
 
-    })
-    
-;
+    });*/
+
+    var ImportController = require('../import/import.controller');
+
+    ImportController.importData('./import.json');
 
     client.get('search/tweets', {q: req.params.keyword}, function(error, tweets, response){
       return res.json(200, tweets);

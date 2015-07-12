@@ -1,0 +1,46 @@
+{
+	"keydata" : [
+		{"url": "http://www.elblogsalmon.com/index.xml",
+		 "group" : "1",
+		 "weight": 0.65},
+		{"url": "http://losmercadosfinancieros.es/feed",
+		 "group" : "1",
+		 "weight": 0.8},
+		{"url": "http://blogs.elpais.com/finanzas-a-las-9/rss.xml",
+		 "group" : "2",
+		 "weight": 0.87}
+	],
+	"index" : [
+		{"name": "^IBEX",
+		 "description": "IBEX35"}
+	],
+	"values" : [
+		{"name": "ITX.MC",
+		 "description": "Industria de Diseno Textil SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "inditex"},
+		 		{"name": "zara"}
+		 	 ],
+		 	 "keygroup":"1"
+		 	},
+		 	{"keywords":[
+		 		{"name": "amancio ortega"}
+		 	 ],
+		 	"keygroup":"2"
+		 	}
+		 ]},
+		 {"name": "IDR.MC",
+		 "description": "Indra Sistemas, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "indra"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]}
+	]
+
+}
