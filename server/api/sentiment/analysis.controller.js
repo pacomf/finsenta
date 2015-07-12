@@ -35,7 +35,6 @@ exports.readRss = function (keyDataId, urlRss, value, query){
       , item;
 
     while (item = stream.read()) {
-      console.log("Hooooola");
       // TODO: Buscar si el analisis de la noticia ya existe en BBDD (value-query-item.link-item.date)
       parseDataRss(keyDataId, item.description, item.link, new Date(item.date), value, query);
     }
@@ -45,7 +44,6 @@ exports.readRss = function (keyDataId, urlRss, value, query){
 }
 
 function parseDataRss(keyDataId, data, url, date, value, query){
-  console.log("Hiiiiii");
   Query.findById(query, function (err, q) {
       var reSearch = new RegExp(q.queryStr, "i");
       if (data.search(reSearch) !== -1){

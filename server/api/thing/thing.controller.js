@@ -140,8 +140,6 @@ exports.twitter = function(req, res){
     value.save();
 
     UserValue.findOne(function (err, userv) {
-      console.log(userv);
-      console.log(userv.query);
       KeyGroup.findById(userv.keyGroup, function(err, keyg) {
         for (var i = keyg.keyData.length - 1; i >= 0; i--) {
           KeyData.findById(keyg.keyData[i], function(err, keyd) {

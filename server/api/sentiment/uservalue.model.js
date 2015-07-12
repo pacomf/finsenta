@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var UserValueSchema = new Schema({
-  value: String,
+  value: { type : Schema.Types.ObjectId, ref : 'Value' },
   query: { type : Schema.Types.ObjectId, ref : 'Query' },
   keyGroup: { type : Schema.Types.ObjectId, ref : 'KeyGroup' }
 });
