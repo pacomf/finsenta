@@ -69,7 +69,6 @@ function handleError(res, err) {
 
 var yahooFinance = require('yahoo-finance');
 var twitter = require('twitter');
-var trends = require('node-google-search-trends');
 
 var client = new twitter({
   consumer_key: 'DLIgci0tLnFkRbJ8MCdbp1T8g',
@@ -111,6 +110,51 @@ exports.twitter = function(req, res){
       });
     });*/
 
+    var UserValue = require('../sentiment/uservalue.model');
+    var KeyGroup = require('../sentiment/keygroup.model');
+    var KeyData = require('../sentiment/keydata.model');
+    var Value = require('../sentiment/value.model');
+
+
+    /*var KeyGroup = require('../sentiment/keygroup.model');
+    var Query = require('../sentiment/query.model');
+    var SearchResult = require('../sentiment/searchresult.model');
+    var UserValue = require('../sentiment/uservalue.model');
+
+    var key = new KeyData();
+    key.save();
+    var keyg = new KeyGroup({keyData: []});
+    keyg.keyData.push(key._id);
+    keyg.save();
+    var query = new Query();
+    query.save();
+    var search = new SearchResult();
+    search.save();
+    var user = new UserValue();
+    user.save();*/
+
+    var AnalysisController = require('../sentiment/analysis.controller');
+
+    var value = new Value();
+    value.name = "ValueName";
+    value.save();
+
+    UserValue.findOne(function (err, userv) {
+      console.log(userv);
+      console.log(userv.query);
+      KeyGroup.findById(userv.keyGroup, function(err, keyg) {
+        for (var i = keyg.keyData.length - 1; i >= 0; i--) {
+          KeyData.findById(keyg.keyData[i], function(err, keyd) {
+            //AnalysisController.readRss(keyd._id, keyd.keyData, userv.value, userv.query);    
+          })
+        };
+        
+      });
+
+    })
+    
+;
+
     client.get('search/tweets', {q: req.params.keyword}, function(error, tweets, response){
       return res.json(200, tweets);
     });
@@ -130,56 +174,7 @@ exports.alchemy = function(req, res){
 }
 
 exports.rss = function(req, res){
-  readRss('http://www.elblogsalmon.com/index.xml', "acs", "grecia");
-}
-
-function readRss(urlRss, value, query){
-  var FeedParser = require('feedparser')
-  , request = require('request');
-
-  var req = request(urlRss)
-  , feedparser = new FeedParser();
-
-  req.on('error', function (error) {
-    // handle any request errors
-  });
-  req.on('response', function (res) {
-    var stream = this;
-
-    if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
-    stream.pipe(feedparser);
-  });
-
-
-  feedparser.on('error', function(error) {
-    // always handle errors
-  });
-  feedparser.on('readable', function() {
-    // This is where the action is!
-    var stream = this
-      , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-      , item;
-
-    while (item = stream.read()) {
-      // TODO: Buscar si el analisis de la noticia ya existe en BBDD (value-query-item.link-item.date)
-      parseDataRss(item.description, item.link, new Date(item.date), urlRss, value, query);
-    }
-  });
-}
-
-function parseDataRss(data, url, date, urlRss, value, query){
-  console.log("Buscando...");
-  var reSearch = new RegExp(query, "i");
-  if (data.search(reSearch) !== -1){
-    //var reCleanText = new RegExp(/<\/?[^>]+(>|$)/, "g");
-    console.log("------ AQUI -----------");
-    console.log(data);
-    var cleanText = data.replace(/<\/?[^>]+(>|$)/g, "");
-    console.log(cleanText);
-    //var cleanText = data.replace(reCleanText, "");
-
-  }
+  //readRss('http://www.elblogsalmon.com/index.xml', "acs", "grecia");
 }
 
 function formatDate(date) {

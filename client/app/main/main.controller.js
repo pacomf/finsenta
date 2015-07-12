@@ -21,15 +21,15 @@ angular.module('finsentaApp')
         }*/
     });
 
-    var textSentimental = "Hoy es un día muy bonito y me gusta mucho la comida. Estoy muy feliz.";
+    //var textSentimental = "Hoy es un día muy bonito y me gusta mucho la comida. Estoy muy feliz.";
 
     /*$http.post('/api/things/alchemy', {'text': textSentimental}).success(function(result) {
         console.log ("Termino: "+result);
     });*/
 
-    $http.post('/api/things/rss', {'url': 'url'}).success(function(result) {
+    /*$http.post('/api/things/rss', {'url': 'url'}).success(function(result) {
         console.log ("Termino: "+result);
-    });
+    });*/
 
     var companyID = 'ITX.MC';
     var companyName = "Inditex";
