@@ -9,10 +9,11 @@ angular.module('finsentaApp')
       $scope.awesomeThings = awesomeThings;
     });
 
-    var keywordTweets = "ibex35, caixa"
+    var keywordTweets = "inditex"
     var urlTweet = "https://twitter.com/statuses/"
 
     $http.get('/api/things/tweets/'+ keywordTweets).success(function(tweets) {
+        //console.log ("Encontre: "+tweets.statuses.length);
         $scope.tweets = tweets.statuses;
         /*for (var i in tweets.statuses){
           var url = urlTweet+tweets.statuses[i].id_str;
@@ -20,8 +21,18 @@ angular.module('finsentaApp')
         }*/
     });
 
-    var companyID = 'CABK.MC';
-    var companyName = "Caixa Bank";
+    var textSentimental = "Hoy es un día muy bonito y me gusta mucho la comida. Estoy muy feliz.";
+
+    /*$http.post('/api/things/alchemy', {'text': textSentimental}).success(function(result) {
+        console.log ("Termino: "+result);
+    });*/
+
+    $http.post('/api/things/rss', {'url': 'url'}).success(function(result) {
+        console.log ("Termino: "+result);
+    });
+
+    var companyID = 'ITX.MC';
+    var companyName = "Inditex";
 
     $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
 
