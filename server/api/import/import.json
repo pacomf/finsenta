@@ -2,13 +2,37 @@
 	"keydata" : [
 		{"url": "http://www.elblogsalmon.com/index.xml",
 		 "group" : "1",
-		 "weight": 0.65},
+		 "weight": 0.5},
 		{"url": "http://losmercadosfinancieros.es/feed",
 		 "group" : "1",
-		 "weight": 0.8},
+		 "weight": 0.5},
 		{"url": "http://blogs.elpais.com/finanzas-a-las-9/rss.xml",
-		 "group" : "2",
-		 "weight": 0.87}
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://rss.elconfidencial.com/mercados/fondos-de-inversion/",
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://rss.elconfidencial.com/mercados/",
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://feeds.feedburner.com/Rankia",
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://feeds.feedburner.com/bolsapirineos",
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://cosasdedinero.com/feed/",
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://feeds2.feedburner.com/banqueroprivado",
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://cincodias.com/rss/tags/ultimas_noticias.xml",
+		 "group" : "1",
+		 "weight": 0.5},
+		 {"url": "http://www.elmundo.com/images/rss/noticias.xml",
+		 "group" : "1",
+		 "weight": 0.5}
 	],
 	"index" : [
 		{"name": "^IBEX",
@@ -28,7 +52,7 @@
 		 	{"keywords":[
 		 		{"name": "amancio ortega"}
 		 	 ],
-		 	"keygroup":"2"
+		 	"keygroup":"1"
 		 	}
 		 ]},
 		 {"name": "IDR.MC",
@@ -37,6 +61,333 @@
 		 "query":[
 		 	{"keywords":[
 		 		{"name": "indra"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "ABE.MC",
+		 "description": "Abertis Infraestructuras S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "abertis"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "ABG-P.MC",
+		 "description": "ABENGOA -B-",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "abengoa"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "ACS.MC",
+		 "description": "Actividades de Construcción y Servicios, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "acs"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "ACX.MC",
+		 "description": "Acerinox, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "acerinox"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "AENA.MC",
+		 "description": "AENA.MC",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "aena"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "AMS.MC",
+		 "description": "Amadeus IT Holding SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "amadeus"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "BBVA.MC",
+		 "description": "Banco Bilbao Vizcaya Argentaria, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "bbva"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "BKIA.MC",
+		 "description": "BANKIA SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "bankia"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "BKT.MC",
+		 "description": "Bankinter, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "bankinter"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "CABK.MC",
+		 "description": "CAIXABANK",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "caixa"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "DIA.MC",
+		 "description": "DIA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "supermercado"},
+		 		{"name": "dia"}
+		 	 ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "ELE.MC",
+		 "description": "Endesa SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "endesa"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "ENG.MC",
+		 "description": "Enagás, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "enagás"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "FCC.MC",
+		 "description": "Fomento de Construcciones y Contratas, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "fcc"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "FER.MC",
+		 "description": "Ferrovial, S.A..",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "ferrovial"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "GAM.MC",
+		 "description": "Gamesa Corporación Tecnológica S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "gamesa"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "GAS.MC",
+		 "description": "Gas Natural SDG SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "gas natural"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "GRF.MC",
+		 "description": "Grifols, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "grifols"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "IAG.MC",
+		 "description": "INTL. CONS. AIR GRP",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "iag"},
+		 		{"name": "aeroline"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	},
+		 	{"keywords":[
+		 		{"name": "iberia"}
+		 	 ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "IBE.MC",
+		 "description": "Iberdrola, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "iberdrola"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "MAP.MC",
+		 "description": "Mapfre SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "mapfre"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "MTS.MC",
+		 "description": "ArcelorMittal SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "arcelormittal"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "OHL.MC",
+		 "description": "Obrascon Huarte Lain SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "obrascon"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "POP.MC",
+		 "description": "Banco Popular Espanol S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "banco popular"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "REE.MC",
+		 "description": "Red Eléctrica Corporación S. A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "red eléctrica"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "REP.MC",
+		 "description": "Repsol, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "repsol"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "SAB.MC",
+		 "description": "Banco de Sabadell, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "banco sabadell"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "SAN.MC",
+		 "description": "Banco Santander, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "banco santander"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "SCYR.MC",
+		 "description": "SACYR",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "SACYR"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "TEF.MC",
+		 "description": "Telefónica S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "telefónica"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "TL5.MC",
+		 "description": "Mediaset España Comunicación, SA",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "mediaset"}
+		 	  ],
+		 	 "keygroup":"1"
+		 	}
+		 ]},
+		 {"name": "TRE.MC",
+		 "description": "Técnicas Reunidas, S.A.",
+		 "index": "^IBEX",
+		 "query":[
+		 	{"keywords":[
+		 		{"name": "tecnicas reunidas"}
 		 	  ],
 		 	 "keygroup":"1"
 		 	}
