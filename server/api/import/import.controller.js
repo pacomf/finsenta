@@ -1,4 +1,4 @@
-
+'use strict';
 
 var UserValue = require('../sentiment/uservalue.model');
 var KeyGroup = require('../sentiment/keygroup.model');
@@ -8,7 +8,6 @@ var Value = require('../sentiment/value.model');
 var Index = require('../sentiment/index.model');
 
 var async = require('async');
-
 
 exports.importData = function (file){
 
@@ -111,7 +110,7 @@ function importUserValue(query, value, callback){
 				var userValue = new UserValue();
 				userValue.value = value._id;
 				userValue.query = [];
-				userValue.KeyGroup = kg._id;
+				userValue.keyGroup = kg._id;
 				async.eachSeries(keywords, function(keyword, callbackK){
 					Query.findOne({"queryStr":keyword.name}, function(err, q){
 						if ((q === null) || (q === undefined)){

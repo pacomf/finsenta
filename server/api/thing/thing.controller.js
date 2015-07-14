@@ -154,9 +154,7 @@ exports.twitter = function(req, res){
 
     });*/
 
-    /*var ImportController = require('../import/import.controller');
-
-    ImportController.importData('./import.json');
+    /*
 
     client.get('search/tweets', {q: req.params.keyword}, function(error, tweets, response){
       return res.json(200, tweets);

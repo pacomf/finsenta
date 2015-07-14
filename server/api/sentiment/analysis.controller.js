@@ -9,7 +9,7 @@ var async = require('async');
 
 var arrayResult = [];
 
-exports.readRss = function (keyDataId, urlRss, value, query){
+/*exports.readRss = function (keyDataId, urlRss, value, query, done){
   var FeedParser = require('feedparser')
   , request = require('request');
 
@@ -37,17 +37,65 @@ exports.readRss = function (keyDataId, urlRss, value, query){
       , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
       , item;
 
+    console.log("Leyendo Blog...");
     while (item = stream.read()) {
       // TODO: Buscar si el analisis de la noticia ya existe en BBDD (value-query-item.link-item.date)
-      parseDataRss(keyDataId, item.description, item.link, new Date(item.date), value, query);
+      console.log("item.title");
+      //parseDataRss(keyDataId, item.description, item.link, new Date(item.date), value, query, done);
     }
+  });
+}*/
+
+exports.readAndProcessRss = function (keyDataId, urlRss, userValues, done){
+  var FeedParser = require('feedparser')
+  , request = require('request');
+
+  var req = request(urlRss)
+  , feedparser = new FeedParser();
+
+  req.on('error', function (error) {
+    // handle any request errors
+  });
+  req.on('response', function (res) {
+    var stream = this;
+
+    if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+
+    stream.pipe(feedparser);
   });
 
 
+  feedparser.on('error', function(error) {
+    // always handle errors
+  });
+  console.log("Leyendo Blog: "+urlRss);
+  feedparser.on('readable', function() {
+    // This is where the action is!
+    var stream = this
+      , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
+      , item;
+
+    while (item = stream.read()) {
+      // TODO: Buscar si el analisis de la noticia ya existe en BBDD (value-query-item.link-item.date)
+      //console.log("Titulo: "+item.title);
+      async.eachSeries(userValues, function(userValue, callbackUV) {
+        async.eachSeries(userValue.query, function(query, callbackQ) {
+          console.log("Info: "+query);
+          //parseDataRss(keyDataId, item.description, item.link, new Date(item.date), userValue.value, query, done);
+          callbackQ();
+        }, function(err){
+          callbackUV();
+        });
+      }, function(err){
+        done();
+      });
+    }
+  });
 }
 
-function parseDataRss(keyDataId, data, url, date, value, query){
+function parseDataRss(keyDataId, data, url, date, value, query, done){
   Query.findById(query, function (err, q) {
+    console.log("Leyendo para: "+q.queryStr+" ("+value+").")
       var reSearch = new RegExp(q.queryStr, "i");
       if (data.search(reSearch) !== -1){
         //var reCleanText = new RegExp(/<\/?[^>]+(>|$)/, "g");
@@ -83,6 +131,7 @@ function parseDataRss(keyDataId, data, url, date, value, query){
               console.log("Sentiment: " + resultFound.sentimentalResult);
               console.log("Score    : " + resultFound.score);
             }
+            done();
           }
         );
     }
@@ -211,14 +260,19 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
  *    req.query.end_date = Fecha de fin de la búsqueda
  */
 exports.sentimentalAnalysis = function(req, res) {
+
   console.log(req.query);
   UserValue.findById(req.query.id, function (err, uservalue) {
-    async.eachSeries(uservalue.query, function(query, callback) {
-      console.log("Calllll");
-      getDataByQueryId(callback, query, req.query.init_date, req.query.end_date);
-    }, function(err){
-      console.log("--" + arrayResult);
-      res.json(200, arrayResult);
-    });
+    if ((uservalue !== null) && (uservalue !== undefined)){
+      async.eachSeries(uservalue.query, function(query, callback) {
+        console.log("Calllll");
+        getDataByQueryId(callback, query, req.query.init_date, req.query.end_date);
+      }, function(err){
+        console.log("--" + arrayResult);
+        res.json(200, arrayResult);
+      });
+     } else {
+       res.json(200, arrayResult);
+     }
   });
 }

@@ -106,7 +106,7 @@
 		 	}
 		 ]},
 		 {"name": "AENA.MC",
-		 "description": "AENA.MC",
+		 "description": "AENA",
 		 "index": "^IBEX",
 		 "query":[
 		 	{"keywords":[

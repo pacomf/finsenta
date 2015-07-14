@@ -30,3 +30,9 @@ server.listen(config.port, config.ip, function () {
 
 // Expose app
 exports = module.exports = app;
+
+// Task init server
+
+var InitController = require('./tasks/config');
+
+InitController.init(app);
