@@ -170,8 +170,7 @@
 		 "index": "^IBEX",
 		 "query":[
 		 	{"keywords":[
-		 		{"name": "supermercado"},
-		 		{"name": "dia"}
+		 		{"name": "supermercado dia"}
 		 	 ],
 		 	 "keygroup":"1"
 		 	}
@@ -250,12 +249,6 @@
 		 "description": "INTL. CONS. AIR GRP",
 		 "index": "^IBEX",
 		 "query":[
-		 	{"keywords":[
-		 		{"name": "iag"},
-		 		{"name": "aeroline"}
-		 	  ],
-		 	 "keygroup":"1"
-		 	},
 		 	{"keywords":[
 		 		{"name": "iberia"}
 		 	 ],

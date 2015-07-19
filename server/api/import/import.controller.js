@@ -32,6 +32,8 @@ function importIndex(indexData, keydatas, values){
 	 			ind.save(function(err, product, numberAffected){
 			 		callback();
 			 	});
+	 		} else {
+	 			callback();
 	 		}
 	 	});
 	}, function(err){
@@ -59,6 +61,8 @@ function importKeyData(keydatas, values){
 					 	kg.save(function(err, product, numberAffected){
 					 		callback();
 					 	});
+					 } else {
+					 	callback();
 					 }
 				} else{
 					 var keyg = new KeyGroup();
@@ -98,6 +102,8 @@ function importValues(values){
 				importUserValue(query, value, callback);
 			}
 		});
+	}, function(err){
+	    console.log("Datos Importados con éxito");
 	});
 }
 
@@ -126,6 +132,8 @@ function importUserValue(query, value, callback){
 				}, function(err){
 				    callbackQ();
 				}); 
+			} else {
+				callbackQ();
 			}
 		});
 	}, function(err){

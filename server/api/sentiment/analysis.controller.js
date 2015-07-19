@@ -6,6 +6,7 @@ var Query = require('./query.model');
 var SearchResult = require('./searchresult.model');
 var UserValue = require('./uservalue.model');
 var async = require('async');
+var config = require('../../tasks/config');
 
 var arrayResult = [];
 
@@ -47,11 +48,16 @@ var arrayResult = [];
 }*/
 
 exports.readAndProcessRss = function (keyDataId, urlRss, userValues, done){
+
+  var now = new Date();
+
+  console.log("["+now+"]. Analizando RSS "+urlRss);
+
   var FeedParser = require('feedparser')
   , request = require('request');
 
-  var req = request(urlRss)
-  , feedparser = new FeedParser();
+  var req = request(urlRss);
+  var feedparser = new FeedParser();
 
   req.on('error', function (error) {
     // handle any request errors
@@ -68,49 +74,59 @@ exports.readAndProcessRss = function (keyDataId, urlRss, userValues, done){
   feedparser.on('error', function(error) {
     // always handle errors
   });
-  console.log("Leyendo Blog: "+urlRss);
+  //console.log("Leyendo Blog: "+urlRss);
   feedparser.on('readable', function() {
     // This is where the action is!
+
     var stream = this
-      , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
       , item;
 
     while (item = stream.read()) {
-      // TODO: Buscar si el analisis de la noticia ya existe en BBDD (value-query-item.link-item.date)
-      //console.log("Titulo: "+item.title);
-      async.eachSeries(userValues, function(userValue, callbackUV) {
-        async.eachSeries(userValue.query, function(query, callbackQ) {
-          console.log("Info: "+query);
-          //parseDataRss(keyDataId, item.description, item.link, new Date(item.date), userValue.value, query, done);
-          callbackQ();
-        }, function(err){
-          callbackUV();
-        });
-      }, function(err){
-        done();
-      });
+      if ((item !== null) && (item !== undefined)){
+        var description = item.description;
+        var link = item.link;
+        var date = new Date(item.date);
+        var thresholdDate = new Date();
+        thresholdDate.setDate(thresholdDate.getDate() - 15);
+        if (date > thresholdDate) {
+          async.eachSeries(userValues, function(userValue, callbackUV) {
+            async.eachSeries(userValue.query, function(query, callbackQ) {
+              parseDataRss(keyDataId, description, link, date, userValue.value, query, done);
+              callbackQ();
+            }, function(err){
+              callbackUV();
+            });
+          }, function(err){});
+        } else {
+          done();
+        }
+      }
     }
   });
 }
 
 function parseDataRss(keyDataId, data, url, date, value, query, done){
   Query.findById(query, function (err, q) {
-    console.log("Leyendo para: "+q.queryStr+" ("+value+").")
-      var reSearch = new RegExp(q.queryStr, "i");
-      if (data.search(reSearch) !== -1){
-        //var reCleanText = new RegExp(/<\/?[^>]+(>|$)/, "g");
+    //console.log("Leyendo para: "+q.queryStr+" ("+value+").");
+    var cleanText = data.replace(/<\/?[^>]+(>|$)/g, "");
+    var reSearch = new RegExp(q.queryStr, "i");
+    if (cleanText.search(reSearch) !== -1){
 
-        var cleanText = data.replace(/<\/?[^>]+(>|$)/g, "");
-
-        SearchResult.findOne({
-          'query': q._id,
-          'urlResult': url
-        }, function(err, resultFound) {
-            if (resultFound === null || resultFound === undefined) {
-              var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
-              var alchemyapi = new AlchemyAPI();
-              alchemyapi.sentiment_targeted("text", cleanText, q.queryStr, {}, function(response) {
-                console.log(response);
+      SearchResult.findOne({
+        'query': q._id,
+        'urlResult': url
+      }, function(err, resultFound) {
+          if (resultFound === null || resultFound === undefined) {
+            if (config.alchemyLimit === 300){
+              console.log("Limite alcanzado Paco");
+              return;
+            }
+            config.alchemyLimit++;
+            var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
+            var alchemyapi = new AlchemyAPI();
+            alchemyapi.sentiment_targeted("text", cleanText, q.queryStr, {}, function(response) {
+              if (response["status"] === "OK"){
+                console.log("Fin Analisis con AlchemyAPI: "+q.queryStr);
                 console.log("Sentiment: " + response["docSentiment"]["type"]);
                 console.log("Score    : " + response["docSentiment"]["score"]);
                 // response["docSentiment"]["type"] = [positive, negative, neutral]
@@ -120,24 +136,33 @@ function parseDataRss(keyDataId, data, url, date, value, query, done){
                 searchResult.keyData = keyDataId;
                 searchResult.urlResult = url;
                 searchResult.language = response["language"];
-                searchResult.score = response["docSentiment"]["score"];
+                if (response["docSentiment"]["score"] === undefined){
+                  searchResult.score = 0;
+                } else {
+                  searchResult.score = response["docSentiment"]["score"];
+                }
                 searchResult.sentimentalResult = response["docSentiment"]["type"];
                 searchResult.analysisDate = new Date();
                 searchResult.dataDate = date;
                 searchResult.save(); 
-              });
-            } else {
-              console.log(resultFound);
-              console.log("Sentiment: " + resultFound.sentimentalResult);
-              console.log("Score    : " + resultFound.score);
-            }
-            done();
+              } else {
+                console.log("ERROR AlchemyAPI: "+response["statusInfo"]);
+                console.log("Palabra: "+q.queryStr);
+                console.log("Url:"+url);
+                done();
+              }
+            });
+          } else {
+            console.log("Resultado encontrado en BBDD: "+q.queryStr);
+            console.log("Sentiment: " + resultFound.sentimentalResult);
+            console.log("Score    : " + resultFound.score);
           }
-        );
+          done();
+      });
+    } else {
+      done();
     }
   });
-
-
 }
 
 function formatDate(date) {
