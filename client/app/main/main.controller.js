@@ -5,6 +5,19 @@ angular.module('finsentaApp')
     $scope.awesomeThings = [];
     $scope.quote = [];
 
+    $scope.items = [
+      { id: 'ITX.MC', name: 'Inditex' }
+    ];
+    $scope.selectedOption = $scope.items[0];
+
+    reloadGraph($scope.items[0].id, $scope.items[0].name);
+
+    $scope.changedValue = function (item) {
+      $scope.selectedOption = item;
+      alert($scope.selectedOption.id);
+      reloadGraph($scope.selectedOption.id, $scope.selectedOption.name);
+    }
+
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
     });
@@ -32,8 +45,7 @@ angular.module('finsentaApp')
         console.log ("Termino: "+result);
     });*/
 
-    var companyID = 'ITX.MC';
-    var companyName = "Inditex";
+    function reloadGraph(companyID, companyName) {
 
     $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
 
@@ -150,6 +162,7 @@ angular.module('finsentaApp')
 
         });
     });
+    }
 
     function searchInfoByDate(arr, date) {
       console.log("Dateeee");
@@ -176,7 +189,6 @@ angular.module('finsentaApp')
       console.log(dateTwo);
       console.log("*-----*");*/
       if(dateOne.getTime() === dateTwo.getTime()) {
-              /*console.log("* YESSS*");*/
         return true;
       }
       return false;
