@@ -20,16 +20,8 @@ exports.scheduleRss = function (){
 
 	KeyData.find({}, function (err, keyDatas){
 		async.eachSeries(keyDatas, function(keyData, callbackKD) {
-			KeyGroup.find({keyData: keyData._id}, function (err, keyGroups){
-				async.eachSeries(keyGroups, function(keyGroup, callbackKG) {
-					UserValue.find({keyGroup: keyGroup._id}, function (err, userValues){
-						dataJobs.push({keyDataId:keyData._id, urlRss:keyData.keyData, userValues: userValues});	
-						callbackKG();					
-					});
-		        }, function(err){
-		        	callbackKD();
-		        });
-			});
+			dataJobs.push({keyDataId:keyData._id, urlRss:keyData.keyData});	
+			callbackKD();
         }, function(err){
         	// Lo hago asi porque hay conflictos en algo de Mongoose
         	// El conflicto es entre la libreria Agenda y [la app propia o la libreria Async] (todas usan Mongoose)
@@ -50,14 +42,14 @@ exports.loadJobs = function(){
 
 	agenda.define('analyzeRss', function(job, done) {
   		var data = job.attrs.data;
-  		AnalysisController.readAndProcessRss(data.keyDataId, data.urlRss, data.userValues, done);
+  		AnalysisController.readAndProcessRss(data.keyDataId, data.urlRss, done);
 	});
 
 	var job;
 
 	Jsonfile.readFile(fileJSON, function(err, obj) {
   		for (var i = obj.length - 1; i >= 0; i--) {
-  			job = agenda.create('analyzeRss', {keyDataId:obj[i].keyDataId, urlRss:obj[i].urlRss, userValues: obj[i].userValues});
+  			job = agenda.create('analyzeRss', {keyDataId:obj[i].keyDataId, urlRss:obj[i].urlRss});
 			job.repeatEvery('10 minutes').save();
   		};
   		agenda.start();

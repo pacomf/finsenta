@@ -47,7 +47,7 @@ var arrayResult = [];
   });
 }*/
 
-exports.readAndProcessRss = function (keyDataId, urlRss, userValues, done){
+exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
   var now = new Date();
 
@@ -74,40 +74,59 @@ exports.readAndProcessRss = function (keyDataId, urlRss, userValues, done){
   feedparser.on('error', function(error) {
     // always handle errors
   });
-  //console.log("Leyendo Blog: "+urlRss);
-  feedparser.on('readable', function() {
-    // This is where the action is!
 
-    var stream = this
-      , item;
+  var userValues = [];
 
-    while (item = stream.read()) {
-      if ((item !== null) && (item !== undefined)){
-        var description = item.description;
-        var link = item.link;
-        var date = new Date(item.date);
-        var thresholdDate = new Date();
-        thresholdDate.setDate(thresholdDate.getDate() - 15);
-        if (date > thresholdDate) {
-          async.eachSeries(userValues, function(userValue, callbackUV) {
-            async.eachSeries(userValue.query, function(query, callbackQ) {
-              parseDataRss(keyDataId, description, link, date, userValue.value, query, done);
-              callbackQ();
-            }, function(err){
-              callbackUV();
-            });
-          }, function(err){});
-        } else {
-          done();
-        }
-      }
-    }
-  });
+    // A partir de la URL (keyData), buscamos todos los UserValues que tengan configurada esa URL para buscar sus queries.
+    KeyGroup.find({keyData: keyDataId}, function (err, keyGroups){
+      async.eachSeries(keyGroups, function(keyGroup, callbackKG) {
+        UserValue.find({keyGroup: keyGroup._id}, function (err, userV){
+          userValues = userValues.concat(userV); 
+          callbackKG();         
+        });
+      }, function(err){
+        feedparser.on('readable', function() {
+          // This is where the action is!
+
+          var stream = this
+            , item;
+
+          while (item = stream.read()) {
+            if ((item !== null) && (item !== undefined)){
+              var description = item.description;
+              if ((description !== null) && (description !== undefined)){
+                  var link = item.link;
+                  var date = new Date(item.date);
+                  var thresholdDate = new Date();
+                  thresholdDate.setDate(thresholdDate.getDate() - 15);
+                  if (date > thresholdDate) {
+                    async.eachSeries(userValues, function(userValue, callbackUV) {
+                      async.eachSeries(userValue.query, function(query, callbackQ) {
+                        parseDataRss(keyDataId, description, link, date, userValue.value, query, done);
+                        callbackQ();
+                      }, function(err){
+                        callbackUV();
+                      });
+                    }, function(err){});
+                  } else {
+                    done();
+                  }
+              } else {
+                done();
+              }
+            } else {
+              done();
+            }
+          }
+        });
+      });
+    });
+
 }
 
 function parseDataRss(keyDataId, data, url, date, value, query, done){
   Query.findById(query, function (err, q) {
-    //console.log("Leyendo para: "+q.queryStr+" ("+value+").");
+    //console.log("Leyendo para: "+q.queryStr+" ("+value+"). = "+url);
     var cleanText = data.replace(/<\/?[^>]+(>|$)/g, "");
     var reSearch = new RegExp(q.queryStr, "i");
     if (cleanText.search(reSearch) !== -1){
@@ -117,7 +136,7 @@ function parseDataRss(keyDataId, data, url, date, value, query, done){
         'urlResult': url
       }, function(err, resultFound) {
           if (resultFound === null || resultFound === undefined) {
-            if (config.alchemyLimit === 300){
+            if (config.alchemyLimit === 30){
               console.log("Limite alcanzado Paco");
               return;
             }
