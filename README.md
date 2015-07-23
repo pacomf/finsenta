@@ -44,6 +44,11 @@ mongo: {
   }
 ```
 
+- In server/tasks/jobScheduling.js
+```
+agenda.database('0385857c-e01a-4c75-9b6a-3b4d7f5f077a:c51e2c0d-7040-4a32-839f-4379f940a60a@23.246.199.70:10010/db/finsenta-jobs', 'finsentaJobs');
+```
+
 ## Execute in console
 
 With the CF Command Line Interface installed [Download](https://github.com/cloudfoundry/cli/releases)
