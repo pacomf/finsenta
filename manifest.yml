@@ -1,0 +1,11 @@
+applications:
+- services:
+  - AlchemyAPI-bh
+  - mongodb-0d
+  disk_quota: 1024M
+  host: finsenta
+  name: finsenta
+  path: .
+  domain: mybluemix.net
+  instances: 1
+  memory: 256M
