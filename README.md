@@ -51,9 +51,9 @@ With the CF Command Line Interface installed [Download](https://github.com/cloud
 In Finsenta Folder, you execute:
 
 1. Connect to Bluemix
-´´´
+```
 cf api https://api.ng.bluemix.net
-´´´
+```
 
 2. Login in Finsenta WorkSpace
 ```
