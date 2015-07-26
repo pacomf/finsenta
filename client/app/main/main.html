@@ -110,115 +110,59 @@
           </div>
 
 
-
-
           <div class="row">
 
 
             <div class="col-md-4">
               <div class="panel">
                 <div class="panel-header">
-                  <h3><i class="icon-list"></i> <strong>News</strong> List</h3>
+                  <h3><i class="icon-list"></i> <strong>Positive</strong> News</h3>
                   <div class="control-btn">
-                    <span class="pull-right badge badge-primary">12</span>
+                    <span class="pull-right badge badge-primary">{{positiveresults.length}}</span>
                   </div>
                 </div>
                 <div class="panel-content widget-news">
-                  <div class="withScroll" data-height="400">
-                    <a href="#" class="message-item media">
+                  <div class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
+                    <a ng-repeat="searchresult in positiveresults" href="{{searchresult.urlResult}}" class="message-item media">
                       <div class="media">
                         <div class="media-body">
                           <div class="pull-left p-r-10">
-                            <i class="icon-lock-open pull-left"></i>
+                            <i class="fa fa-newspaper-o pull-left"></i>
                           </div>
                           <div>
-                            <small class="pull-right">28 Feb</small>
-                            <h4 class="c-dark">Reset your account password</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy'}}</small>
+                            <h4 class="c-dark">{{searchresult.titleResult}}</h4>
+                            <!--p class="f-14 c-gray">{{searchresult.urlResult}}</p-->
                           </div>
                         </div>
                       </div>
                     </a>
-                    <a href="#" class="message-item media">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="panel">
+                <div class="panel-header">
+                  <h3><i class="icon-list"></i> <strong>Neutral</strong> News</h3>
+                  <div class="control-btn">
+                    <span class="pull-right badge badge-warning">{{neutralresults.length}}</span>
+                  </div>
+                </div>
+                <div class="panel-content widget-news">
+                  <div class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
+                    <a ng-repeat="searchresult in neutralresults" href="{{searchresult.urlResult}}" class="message-item media">
                       <div class="media">
                         <div class="media-body">
                           <div class="pull-left p-r-10">
-                            <i class="icon-cloud-upload pull-left"></i>
+                            <i class="fa fa-newspaper-o pull-left"></i>
                           </div>
                           <div>
-                            <small class="pull-right">27 Feb</small>
-                            <h4 class="c-dark">Check Dropbox</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-docs pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">27 Feb</small>
-                            <h4 class="c-dark">New document added</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-present pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">26 Feb</small>
-                            <h4 class="c-dark">You receive a gift</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-call-in pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">25 Feb</small>
-                            <h4 class="c-dark">Call Alfred for business</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-calendar pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">25 Feb</small>
-                            <h4 class="c-dark">Appointment at 8pm today</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-rocket pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">24 Feb</small>
-                            <h4 class="c-dark">Trip to Mars begin</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy'}}</small>
+                            <h4 class="c-dark">{{searchresult.titleResult}}</h4>
+                            <!--p class="f-14 c-gray">{{searchresult.urlResult}}</p-->
                           </div>
                         </div>
                       </div>
@@ -231,220 +175,23 @@
             <div class="col-md-4">
               <div class="panel">
                 <div class="panel-header">
-                  <h3><i class="icon-list"></i> <strong>News</strong> List</h3>
+                  <h3><i class="icon-list"></i> <strong>Negative</strong> News</h3>
                   <div class="control-btn">
-                    <span class="pull-right badge badge-primary">12</span>
+                    <span class="pull-right badge badge-danger">{{negativeresults.length}}</span>
                   </div>
                 </div>
                 <div class="panel-content widget-news">
-                  <div class="withScroll" data-height="400">
-                    <a href="#" class="message-item media">
+                  <div class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
+                    <a ng-repeat="searchresult in negativeresults" href="{{searchresult.urlResult}}" class="message-item media">
                       <div class="media">
                         <div class="media-body">
                           <div class="pull-left p-r-10">
-                            <i class="icon-lock-open pull-left"></i>
+                            <i class="fa fa-newspaper-o pull-left"></i>
                           </div>
                           <div>
-                            <small class="pull-right">28 Feb</small>
-                            <h4 class="c-dark">Reset your account password</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-cloud-upload pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">27 Feb</small>
-                            <h4 class="c-dark">Check Dropbox</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-docs pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">27 Feb</small>
-                            <h4 class="c-dark">New document added</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-present pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">26 Feb</small>
-                            <h4 class="c-dark">You receive a gift</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-call-in pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">25 Feb</small>
-                            <h4 class="c-dark">Call Alfred for business</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-calendar pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">25 Feb</small>
-                            <h4 class="c-dark">Appointment at 8pm today</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-rocket pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">24 Feb</small>
-                            <h4 class="c-dark">Trip to Mars begin</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="panel">
-                <div class="panel-header">
-                  <h3><i class="icon-list"></i> <strong>News</strong> List</h3>
-                  <div class="control-btn">
-                    <span class="pull-right badge badge-primary">12</span>
-                  </div>
-                </div>
-                <div class="panel-content widget-news">
-                  <div class="withScroll" data-height="400">
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-lock-open pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">28 Feb</small>
-                            <h4 class="c-dark">Reset your account password</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-cloud-upload pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">27 Feb</small>
-                            <h4 class="c-dark">Check Dropbox</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-docs pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">27 Feb</small>
-                            <h4 class="c-dark">New document added</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-present pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">26 Feb</small>
-                            <h4 class="c-dark">You receive a gift</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-call-in pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">25 Feb</small>
-                            <h4 class="c-dark">Call Alfred for business</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-calendar pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">25 Feb</small>
-                            <h4 class="c-dark">Appointment at 8pm today</h4>
-                            <p class="f-14 c-gray">Hello Steve, I have added new files in your Dropbox in order to show you how to...</p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="message-item media">
-                      <div class="media">
-                        <div class="media-body">
-                          <div class="pull-left p-r-10">
-                            <i class="icon-rocket pull-left"></i>
-                          </div>
-                          <div>
-                            <small class="pull-right">24 Feb</small>
-                            <h4 class="c-dark">Trip to Mars begin</h4>
-                            <p class="f-14 c-gray">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy'}}</small>
+                            <h4 class="c-dark">{{searchresult.titleResult}}</h4>
+                            <p class="f-14 c-gray">{{searchresult.urlResult}}</p>
                           </div>
                         </div>
                       </div>

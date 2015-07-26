@@ -1,25 +1,21 @@
 'use strict';
 
 angular.module('finsentaApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, $filter) {
     $scope.awesomeThings = [];
     $scope.quote = [];
-
     $scope.items = [];
+    $scope.searchresults = [];
 
     // Recargamos la lista de posibles valores
     $http.get('/api/sentiment/value').success(function(values) {
       $scope.items = values;
-
       $scope.selectedOption = $scope.items[0];
-
       reloadGraph($scope.items[0].name, $scope.items[0].description);
     });
 
-
-
     $scope.changedValue = function (item) {
-      console.log("hola");
+      $scope.selectedOption = item;
       reloadGraph(item.name, item.description);
     }
 
@@ -51,6 +47,19 @@ angular.module('finsentaApp')
     });*/
 
     function reloadGraph(companyID, companyName) {
+
+          // Obtenemos las noticias (searchresults)
+    $http.get('/api/sentiment/searchresult').success(function(values) {
+      console.log("Aquiiiiii");
+      $scope.searchresults = values;
+      console.log("Search results:")
+      console.log($scope.searchresults);
+      console.log("Selected Option:")
+      console.log($scope.selectedOption);
+      $scope.positiveresults = $filter('filter')($scope.searchresults, { sentimentalResult : 'positive' , value: $scope.selectedOption._id});
+      $scope.neutralresults = $filter('filter')($scope.searchresults, { sentimentalResult : 'neutral' , value: $scope.selectedOption._id});
+      $scope.negativeresults = $filter('filter')($scope.searchresults, { sentimentalResult : 'negative', value: $scope.selectedOption._id});
+    });
 
     $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
 
