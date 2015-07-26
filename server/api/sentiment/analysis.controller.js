@@ -7,6 +7,7 @@ var SearchResult = require('./searchresult.model');
 var UserValue = require('./uservalue.model');
 var async = require('async');
 var config = require('../../tasks/config');
+var U = require('./utilities');
 
 var arrayResult = [];
 
@@ -345,3 +346,18 @@ function areEqualsDate(date1, date2) {
     }
     return false;
 }
+
+exports.tweetInfo = function(req, res) {
+  var value = req.params.stock;
+  var ret = {};
+  for (var i = U.lastTweetInfo.length - 1; i >= 0; i--) {
+    if (U.lastTweetInfo[i].value === value){
+      ret.tweets = U.lastTweetInfo[i].tweets;
+      ret.num = U.lastTweetInfo[i].num;
+      break;
+    }
+  }
+  res.json(200, ret);
+}
+
+

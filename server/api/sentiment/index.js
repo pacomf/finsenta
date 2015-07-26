@@ -14,6 +14,8 @@ var router = express.Router();
 
 router.get('/sentimental', analysisController.sentimentalAnalysis);
 
+router.get('/tweetInfo/:stock', analysisController.tweetInfo);
+
 // KeyData routes
 var keyDataPath = '/keydata';
 router.get(keyDataPath, keyDataController.index);

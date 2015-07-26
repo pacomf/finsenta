@@ -19,10 +19,6 @@ angular.module('finsentaApp')
       reloadGraph(item.name, item.description);
     }
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
-
     //var keywordTweets = "inditex"
     //var urlTweet = "https://twitter.com/statuses/"
 
@@ -48,7 +44,7 @@ angular.module('finsentaApp')
 
     function reloadGraph(companyID, companyName) {
 
-          // Obtenemos las noticias (searchresults)
+    // Obtenemos las noticias (searchresults)
     $http.get('/api/sentiment/searchresult').success(function(values) {
       console.log("Aquiiiiii");
       $scope.searchresults = values;
@@ -61,13 +57,19 @@ angular.module('finsentaApp')
       $scope.negativeresults = $filter('filter')($scope.searchresults, { sentimentalResult : 'negative', value: $scope.selectedOption._id});
     });
 
+    $http.get('/api/sentiment/tweetInfo/'+ companyID).success(function(info) {
+      $scope.tweets = info.tweets;
+      $scope.numTweets = info.num;
+      console.log("Tweets: "+info.tweets);
+      console.log("Valgo: "+info.num);
+    });
+
     $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
 
 
         var lastDate = quotes[quotes.length-1].date;
         var firstDate = quotes[0].date;
         $http.get('/api/sentiment/sentimental', { params: { 'id': '55a2543fd60126250c03b7d0', 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
-            console.log(sentimentalData);
             $scope.sentimentalData = sentimentalData;
             /*for (var i in tweets.statuses){
               var url = urlTweet+tweets.statuses[i].id_str;
@@ -81,8 +83,6 @@ angular.module('finsentaApp')
             for (var i in quotes){
               stock.push([(new Date(quotes[i].date)).getTime(), quotes[i].close]);
               var score = searchInfoByDate(sentimentalData, new Date(quotes[i].date));
-              console.log("Score:");
-              console.log(score);
               score = score * 28;
               if (score >= 0) {
                 positiveActions.push([(new Date(quotes[i].date)).getTime(), score]);
@@ -178,14 +178,9 @@ angular.module('finsentaApp')
     }
 
     function searchInfoByDate(arr, date) {
-      console.log("Dateeee");
-      console.log(date);
       for (var i = arr.length - 1; i >= 0; i--) {
         var mDate = new Date(arr[i].date);
         if (areEquals(date, mDate)) {
-          console.log("mDate");
-          console.log(mDate);
-          console.log(arr[i]);
           return arr[i].value;
         }
       };
