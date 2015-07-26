@@ -51,6 +51,8 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
   var now = new Date();
 
+  return;
+
   console.log("["+now+"]. Analizando RSS "+urlRss);
 
   var FeedParser = require('feedparser')
@@ -98,11 +100,12 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
                   var link = item.link;
                   var date = new Date(item.date);
                   var thresholdDate = new Date();
+                  var title = item.title;
                   thresholdDate.setDate(thresholdDate.getDate() - 15);
                   if (date > thresholdDate) {
                     async.eachSeries(userValues, function(userValue, callbackUV) {
                       async.eachSeries(userValue.query, function(query, callbackQ) {
-                        parseDataRss(keyDataId, description, link, date, userValue.value, query, done);
+                        parseDataRss(keyDataId, description, link, title, date, userValue.value, query, done);
                         callbackQ();
                       }, function(err){
                         callbackUV();
@@ -124,7 +127,7 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
 }
 
-function parseDataRss(keyDataId, data, url, date, value, query, done){
+function parseDataRss(keyDataId, data, url, title, date, value, query, done){
   Query.findById(query, function (err, q) {
     //console.log("Leyendo para: "+q.queryStr+" ("+value+"). = "+url);
     var cleanText = data.replace(/<\/?[^>]+(>|$)/g, "");
@@ -136,11 +139,14 @@ function parseDataRss(keyDataId, data, url, date, value, query, done){
         'urlResult': url
       }, function(err, resultFound) {
           if (resultFound === null || resultFound === undefined) {
-            if (config.alchemyLimit === 30){
-              console.log("Limite alcanzado Paco");
+            var now = new Date();
+            if ((config.alchemyLimit === config.maxAlchemyLimit) && (areEqualsDate(now, config.lastDateAnalysis))){
+              console.log("Limite interno alcanzado de consulta a AlchemyAPI");
+              done();
               return;
             }
             config.alchemyLimit++;
+            config.lastDateAnalysis =  new Date();
             var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
             var alchemyapi = new AlchemyAPI();
             alchemyapi.sentiment_targeted("text", cleanText, q.queryStr, {}, function(response) {
@@ -154,6 +160,7 @@ function parseDataRss(keyDataId, data, url, date, value, query, done){
                 searchResult.query = q._id;
                 searchResult.keyData = keyDataId;
                 searchResult.urlResult = url;
+                searchResult.titleResult = title;
                 searchResult.language = response["language"];
                 if (response["docSentiment"]["score"] === undefined){
                   searchResult.score = 0;
@@ -319,4 +326,22 @@ exports.sentimentalAnalysis = function(req, res) {
        res.json(200, arrayResult);
      }
   });
+}
+
+function areEqualsDate(date1, date2) {
+    if ((date1 === null) || (date1 === undefined) || (date2 === null) || (date2 === undefined)){
+      return false;
+    }
+    var dateOne = new Date(date1);
+    dateOne.setHours(0,0,0,0);
+    var dateTwo = new Date(date2);
+    dateTwo.setHours(0,0,0,0);
+    /*console.log("*******");
+    console.log(dateOne);
+    console.log(dateTwo);
+    console.log("*-----*");*/
+    if(dateOne.getTime() === dateTwo.getTime()) {
+      return true;
+    }
+    return false;
 }

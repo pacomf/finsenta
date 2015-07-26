@@ -8,6 +8,7 @@ var SearchResult = new Schema({
   query: { type : Schema.Types.ObjectId, ref : 'Query' },
   keyData: { type : Schema.Types.ObjectId, ref : 'KeyData' },
   urlResult: String,
+  titleResult: String,
   language: String,
   sentimentalResult: String,
   score: Number,

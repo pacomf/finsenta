@@ -117,8 +117,7 @@ angular.module('finsentaApp')
                 },
 
                 rangeSelector : {
-                    inputEnabled: false,
-                    selected : 1
+                    enabled: false
                 },
 
                 title : {

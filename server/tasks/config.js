@@ -5,7 +5,11 @@ var ScheduleController = require('./jobScheduling');
 
 var alchemyLimit = 0;
 
+exports.maxAlchemyLimit = 30;
+
 exports.alchemyLimit = alchemyLimit;
+
+exports.lastDateAnalysis = null;
 
 exports.init = function(app){
 
