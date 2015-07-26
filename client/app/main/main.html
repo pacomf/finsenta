@@ -8,11 +8,23 @@
       <div class="main-content" style="margin-left:0">
 
         <!-- BEGIN PAGE CONTENT -->
-        <div class="page-content page-thin">
+        <div class="page-content page-thin" style="margin-top: 0;">
+
+         <div class="row">
+           <div class="col-md-12" >
+             <div class="panel"  style="background: url(./assets/admin/layout1/img/dkn-home-header-app.jpg); background-size:cover">
+               <div class="panel-content" style="padding: 20px;">
+                 <img src="./assets/admin/layout1/img/dkn-logo-header-white.png" style="height: 50px; float: right; display: block;">
+                 <h1 style="color: white"><strong>IBEX 35</strong> Sentiment</h1>
+                 <p style="color: white">Calculamos el sentimiento social sobre un valor en base a opiniones obtenidas de noticias y redes sociales, <br>filtrándolas y valorándolas con nuestro algoritmo inteligente</p>
+               </div>
+             </div>
+           </div>
+         </div>
 
           <div class="row">
 
-            <div class="col-xlg-6">
+            <div>
               <div class="panel">
                 <div class="panel-content widget-full widget-stock stock2">
                   <div class="tab_right">
@@ -60,16 +72,16 @@
 
           <div class="row m-t-10">
 
-            <div class="col-xlg-2 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
               <div class="panel">
                 <div class="panel-content widget-info">
                   <div class="row">
                     <div class="left">
-                      <i class="fa fa-fire-extinguisher bg-red"></i>
+                      <i class="fa fa-twitter bg-blue"></i>
                     </div>
                     <div class="right">
-                      <p class="number countup" data-from="0" data-to="463" data-suffix="k">0</p>
-                      <p class="text">Extinguishers</p>
+                      <p class="number countup" data-from="0" data-to="{{numTweets}}">0</p>
+                      <p class="text">Tweets</p>
                     </div>
                   </div>
                 </div>
@@ -77,33 +89,21 @@
             </div>
 
 
-            <div class="col-xlg-4 col-lg-8 col-md-8 col-sm-8 col-xs-12 col-visitors">
-              <div class="row">
-                <div class="col-md-12">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                   <div class="panel no-bd bd-3 panel-stat">
-
-                    <div class="panel-body p-15 p-b-0">
-                      <div class="row m-b-10">
-                        <div class="col-xs-1 big-icon">
-                          <i class="fa fa-twitter"></i>
-                        </div>
-                        <div class="col-xs-11">
-                          <div class="live-tile" data-mode="carousel" data-direction="vertical" data-delay="3500" data-height="60" style="width: 100%">
-                            <div>
-                              <p class="stat-title">Visits today</p>
-                              <a href="#" class="text" style="color:black; font-size: 12px; text-decoration: none; ">Extinguishers is a text demo. Extinguishers is a text demo. Extinguishers is a text demo. Extinguishers is a text demo. Extinguishers is a text demo. </a>
+                    <div class="panel-body p-10 p-b-0">
+                          <div class="live-tile" data-mode="carousel" data-direction="vertical" data-delay="4000" style="width: 100%; height: 68px">
+                            <div ng-repeat="tweet in tweets">
+                              <img src="{{tweet.profile_image_url}}" alt="Image Profile" height="60" width="60" class="img-circle" style="border:2px solid#4584d1; float: left">
+                              <div class="stat-title" style="margin-left: 60px">
+                                <p style="float: left">{{tweet.name}}</p>
+                                <p style="margin-left: 10px; color: grey">{{tweet.created_at}}</p>
+                              </div>
+                              <a href="https://twitter.com/statuses/{{tweet.id_str}}" target="_blank" class="text" style="color:black; font-size: 12px; text-decoration: none; margin-left: 10px">{{tweet.text}}</a>
                             </div>
-                            <div>
-                              <p class="stat-title">Visits today</p>
-                              <a href="#" class="text" style="color:black; font-size: 12px; text-decoration: none; ">Extinguishers is a text demo. Extinguishers is a text demo. Extinguishers is a text demo. Extinguishers is a text demo. Extinguishers is a text demo. </a>
-                            </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
             </div>
 
 
@@ -231,7 +231,7 @@
 
     <!-- BEGIN PRELOADER -->
     <div class="loader-overlay">
-      <div class="spinner">
+      <div id="loaderSpinner" class="spinner">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
         <div class="bounce3"></div>

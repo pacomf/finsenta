@@ -11,7 +11,9 @@ $(document).ready(function() {
 
     setTimeout(function() {
         handleboxedLayout();
+        $('.loader-overlay').css('background', "#CCC");
     }, 100);
+
     if ($('body').hasClass('sidebar-hover')) sidebarHover();
 
     $('[data-toggle]').on('click', function(event) {

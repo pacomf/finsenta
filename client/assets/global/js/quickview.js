@@ -68,20 +68,6 @@ function quickviewSidebar() {
     });
 
 
-    content.addEventListener('click', function(ev) {
-        chatSidebar = document.getElementById('quickview-sidebar');
-        var target = ev.target;
-        if( target !== chatSidebar ) {
-            if($('#quickview-sidebar').hasClass('open')){
-                $('#quickview-sidebar').addClass('closing');
-                $('#quickview-sidebar').removeClass('open');
-                setTimeout(function(){
-                    $('#quickview-sidebar').removeClass('closing');
-                },400);
-            }
-        }
-    });
-
    if($('.settings-chart .progress-bar').length) {
         $('.settings-tab').on('click', function () {
             setTimeout(function () {

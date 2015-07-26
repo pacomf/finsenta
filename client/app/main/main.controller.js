@@ -42,7 +42,15 @@ angular.module('finsentaApp')
         console.log ("Termino: "+result);
     });*/
 
-    function reloadGraph(companyID, companyName) {
+  function reloadGraph(companyID, companyName) {
+
+    $('#loaderSpinner').removeClass('spinner');
+    $('.loader-overlay').removeClass('loaded');
+
+    setTimeout(function() {
+        $('#loaderSpinner').addClass('spinner');
+    }, 200);
+    
 
     // Obtenemos las noticias (searchresults)
     $http.get('/api/sentiment/searchresult').success(function(values) {
@@ -60,16 +68,21 @@ angular.module('finsentaApp')
     $http.get('/api/sentiment/tweetInfo/'+ companyID).success(function(info) {
       $scope.tweets = info.tweets;
       $scope.numTweets = info.num;
-      console.log("Tweets: "+info.tweets);
-      console.log("Valgo: "+info.num);
+      // TODO: Refrescar el DIV para actualizar los nuevos datos
+      setTimeout(function() {
+        animateNumber();
+        $(".live-tile").liveTile();
+      }, 2000);
     });
 
     $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
 
-
         var lastDate = quotes[quotes.length-1].date;
         var firstDate = quotes[0].date;
         $http.get('/api/sentiment/sentimental', { params: { 'id': '55a2543fd60126250c03b7d0', 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
+            
+            $('.loader-overlay').addClass('loaded');
+
             $scope.sentimentalData = sentimentalData;
             /*for (var i in tweets.statuses){
               var url = urlTweet+tweets.statuses[i].id_str;
@@ -125,7 +138,7 @@ angular.module('finsentaApp')
                 },
 
                 rangeSelector : {
-                    enabled: false
+                    enabled: true
                 },
 
                 title : {

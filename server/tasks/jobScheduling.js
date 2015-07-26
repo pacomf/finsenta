@@ -11,6 +11,8 @@ var Query = require('../api/sentiment/query.model');
 
 var U = require('../api/sentiment/utilities');
 
+var mongoose = require('mongoose');
+
 var async = require('async');
 
 var Jsonfile = require('jsonfile')
@@ -73,7 +75,57 @@ var client = new twitter({
 
 function searchTweets (value, keyword, done){
 
+	var tweetsMock = [];
+	var tMock = {"text":"Esto es un tweet de prueba",
+				 "user":{
+				 	"profile_image_url":"https://pbs.twimg.com/profile_images/584641368598929408/4TYLDoM5_400x400.jpg",
+				 	"name": "Paco Martín",
+				 	"screen_name": "pacomartinfdez"
+				 },
+				 "id_str":"250075927172759552",
+				 "created_at":"Mon Sep 24 03:35:21 +0000 2012"
+				 };
+	tweetsMock.push(tMock);
+	tweetsMock.push(tMock);
+
+	var tweetsParser=[];
+	var auxTweet = {};
+	var countMock = 2;
+
+	for (var i = tweetsMock.length - 1; i >= 0; i--) {
+		auxTweet.text=tweetsMock[i].text;
+		auxTweet.profile_image_url = tweetsMock[i].user.profile_image_url;
+		auxTweet.name = tweetsMock[i].user.name;
+		auxTweet.screen_name = tweetsMock[i].user.screen_name;
+		auxTweet.id_str = tweetsMock[i].id_str;
+		auxTweet.created_at = formatDatePretty(tweetsMock[i].created_at);
+		tweetsParser.push(auxTweet);
+	}
+
+	var index = -1;
+	for (var i = U.lastTweetInfo.length - 1; i >= 0; i--) {
+		if (U.lastTweetInfo[i].value === value){
+			index = i;
+			break;
+		}
+	}
+	if (index === -1){
+		var newJson = {};
+		newJson.value = value;
+		newJson.tweets = tweetsParser;
+		newJson.num = countMock;
+		U.lastTweetInfo.unshift(newJson);
+		index = 0;
+	} else {
+      	U.lastTweetInfo[index].num += countMock;
+		U.lastTweetInfo[index].tweets = tweetsParser;
+	}
+	//console.log(U.lastTweetInfo);
+	done();
 	return;
+
+
+
 	client.get('search/tweets', {q: keyword}, function(error, tweets, response){
 		if (error){
 			console.log("Error Twitter: "+error.name+"|"+error.message);
@@ -81,6 +133,20 @@ function searchTweets (value, keyword, done){
 			return;
 		}
 		console.log("Nuevos Tweets para: "+value);
+
+		var tweetsParser=[];
+		var auxTweet = {};
+
+		for (var i = tweets.statuses.length - 1; i >= 0; i--) {
+			auxTweet.text=tweets.statuses[i].text;
+			auxTweet.profile_image_url = tweets.statuses[i].user.profile_image_url;
+			auxTweet.name = tweets.statuses[i].user.name;
+			auxTweet.screen_name = tweets.statuses[i].user.screen_name;
+			auxTweet.id_str = tweets.statuses[i].id_str;
+			auxTweet.created_at = formatDatePretty(tweets.statuses[i].created_at);
+			tweetsParser.push(auxTweet);
+		}
+
 		var index = -1;
 		for (var i = U.lastTweetInfo.length - 1; i >= 0; i--) {
 			if (U.lastTweetInfo[i].value === value){
@@ -91,13 +157,13 @@ function searchTweets (value, keyword, done){
 		if (index === -1){
 			var newJson = {};
 			newJson.value = value;
-			newJson.tweets = tweets.statuses;
+			newJson.tweets = tweetsParser;
 			newJson.num = tweets.search_metadata.count;
 			U.lastTweetInfo.unshift(newJson);
 			index = 0;
 		} else {
           	U.lastTweetInfo[index].num += tweets.search_metadata.count;
-			U.lastTweetInfo[index].tweets = tweets.statuses;
+			U.lastTweetInfo[index].tweets = tweetsParser;
 		}
 		done();
 	});
@@ -110,9 +176,10 @@ exports.loadTwitter = function(){
 	agenda._db._emitter._maxListeners = 0;
 
 	agenda.define('analyzeTwitter', function(job, done) {
-  		var value = job.attrs.value;
-  		var keyword = job.attrs.keyword;
-  		searchTweets(value, keyword, done);
+		var data = job.attrs.data;
+  		var nameV = data.nameV;
+  		var keyword = data.keyword;
+  		searchTweets(nameV, keyword, done);
 	});
 
 	var job;
@@ -121,16 +188,42 @@ exports.loadTwitter = function(){
 	UserValue.find({}, function (err, userValues){
 		for (var i = userValues.length - 1; i >= 0; i--) {
 			var value = userValues[i].value;
-			valuesQuery[value] = userValues[i].query;
-			Value.findById(value, function (err, v){
-				Query.find({_id: {$in: valuesQuery[v._id]}}, function(err, queries){
-					for (var j = queries.length - 1; j >= 0; j--) {
-						job = agenda.create('analyzeTwitter', {value:v.name, keyword:queries[j].queryStr});
-						job.repeatEvery('16 minutes').save();
-					};
+			if ((valuesQuery[value] === null) || (valuesQuery[value] === undefined)){
+				valuesQuery[value] = [];
+			}
+			valuesQuery[value] = valuesQuery[value].concat(userValues[i].query);
+		}
+		for (var key in valuesQuery) {
+			Value.findById(key, function (err, v){
+				var nameV = v.name;
+				Query.find({'_id': {$in: valuesQuery[v._id]}}, function(err, queries){
+					if (queries !== undefined){
+						for (var j = queries.length - 1; j >= 0; j--) {
+							job = agenda.create('analyzeTwitter', {nameV:nameV, keyword:queries[j].queryStr});
+							job.repeatEvery('16 minutes').save();
+						};
+					}
 				});
 			});
 		};
 		agenda.start();
 	});
+}
+
+function formatDatePretty(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear(),
+        minutes = '' + d.getMinutes(),
+        hours = '' + d.getHours();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    if (hours.length < 2) hours = '0' + hours;
+    if (minutes.length < 2) minutes = '0' + minutes;
+
+    var dateStr = day+"/"+month+"/"+year+" "+hours+":"+minutes;
+
+    return dateStr;
 }
