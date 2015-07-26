@@ -19,9 +19,8 @@ angular.module('finsentaApp')
 
 
     $scope.changedValue = function (item) {
-      $scope.selectedOption = item;
-      alert($scope.selectedOption.name);
-      reloadGraph($scope.selectedOption.name, $scope.selectedOption.description);
+      console.log("hola");
+      reloadGraph(item.name, item.description);
     }
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -111,7 +110,7 @@ angular.module('finsentaApp')
                                 pAS.addPoint([x, y/1.05], true, true);
                                 nAS.addPoint([x, y/1.1], true, true);
                                 // TODO: Ajustar minimumStock si es necesario y actualizar yAxis.min
-                            }, 1000);*/
+                            }, 1000);)*/
                         }
                     }
                 },
