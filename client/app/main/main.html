@@ -7,10 +7,17 @@
   </div>
 </header>
 
-<div>
+<!--div>
   <select ng-model="selectedOption" ng-options="item as item.name for item in items" ng-change="changedValue(selectedOption)"></select>
   <pre>{{selectedItem | json}}</pre>
-</div>
+</div-->
+
+<ul>
+  <li ng-repeat="item in items">
+    <span>{{item.name}}</span>
+    <p>{{item.description}}</p>
+  </li>
+</ul>
 
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 

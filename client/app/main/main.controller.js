@@ -5,17 +5,23 @@ angular.module('finsentaApp')
     $scope.awesomeThings = [];
     $scope.quote = [];
 
-    $scope.items = [
-      { id: 'ITX.MC', name: 'Inditex' }
-    ];
-    $scope.selectedOption = $scope.items[0];
+    $scope.items = [];
 
-    reloadGraph($scope.items[0].id, $scope.items[0].name);
+    // Recargamos la lista de posibles valores
+    $http.get('/api/sentiment/value').success(function(values) {
+      $scope.items = values;
+
+      $scope.selectedOption = $scope.items[0];
+
+      reloadGraph($scope.items[0].name, $scope.items[0].description);
+    });
+
+
 
     $scope.changedValue = function (item) {
       $scope.selectedOption = item;
-      alert($scope.selectedOption.id);
-      reloadGraph($scope.selectedOption.id, $scope.selectedOption.name);
+      alert($scope.selectedOption.name);
+      reloadGraph($scope.selectedOption.name, $scope.selectedOption.description);
     }
 
     $http.get('/api/things').success(function(awesomeThings) {

@@ -6,6 +6,9 @@ var queryController = require('./query.controller');
 var keyGroupController = require('./keygroup.controller');
 var searchResultController = require('./searchresult.controller');
 var analysisController = require('./analysis.controller');
+var uservalueController = require('./uservalue.controller');
+var indexController = require('./index.controller');
+var valueController = require('./value.controller');
 
 var router = express.Router();
 
@@ -43,5 +46,28 @@ router.put(searchResultPath + '/:id', searchResultController.update);
 router.patch(searchResultPath + '/:id', searchResultController.update);
 router.delete(searchResultPath + '/:id', searchResultController.destroy);
 
+// UserValue routes
+var uservaluePath = '/uservalue';
+router.get(uservaluePath, uservalueController.index);
+router.post(uservaluePath, uservalueController.create);
+router.put(uservaluePath + '/:id', uservalueController.update);
+router.patch(uservaluePath + '/:id', uservalueController.update);
+router.delete(uservaluePath + '/:id', uservalueController.destroy);
+
+// Value routes
+var valuePath = '/value';
+router.get(valuePath, valueController.index);
+router.post(valuePath, valueController.create);
+router.put(valuePath + '/:id', valueController.update);
+router.patch(valuePath + '/:id', valueController.update);
+router.delete(valuePath + '/:id', valueController.destroy);
+
+// Index routes
+var indexPath = '/index';
+router.get(indexPath, indexController.index);
+router.post(indexPath, indexController.create);
+router.put(indexPath + '/:id', indexController.update);
+router.patch(indexPath + '/:id', indexController.update);
+router.delete(indexPath + '/:id', indexController.destroy);
 
 module.exports = router;
