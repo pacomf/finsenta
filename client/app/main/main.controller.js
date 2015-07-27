@@ -109,6 +109,7 @@ angular.module('finsentaApp')
             var max = 0
             var minScore = 10000
             var maxScore = 0
+            var maxValues = 1
             var score = 0;
             for (var j in quotes) {
               if (quotes[j].close < min) {
@@ -117,6 +118,14 @@ angular.module('finsentaApp')
               if (quotes[j].close > max) {
                 max = quotes[j].close + 1;
               }
+
+              var newSearch = searchInfoDataByDate(sentimentalData, new Date(quotes[j].date));
+              if (newSearch !== undefined) {
+                if ((newSearch.neutrals + newSearch.positives + newSearch.negatives) > maxValues) {
+                  maxValues = newSearch.neutrals + newSearch.positives + newSearch.negatives;
+                }
+              }  
+
               score = searchPositiveScoreByDate(sentimentalData, new Date(quotes[j].date));
               if (score < minScore) {
                 minScore = score;
@@ -125,8 +134,15 @@ angular.module('finsentaApp')
                 maxScore = score;
               }
             };
-            min = min - 1;
-            max = max + 1;
+            min = min;
+            max = max;
+  
+            console.log("Max: " + max);
+            console.log("Min: " + min);
+            var range = max - min;
+            console.log("Range: " + range);
+            var valueMention = range / maxValues;
+            console.log("Value of one: " + valueMention)
 
             var numNeutrals = Math.floor(min);
             var numPositives = Math.floor(min);
@@ -141,9 +157,15 @@ angular.module('finsentaApp')
               }
               stock.push([(new Date(quotes[i].date)).getTime(), quotes[i].close]);
 
-              
+              var valueNeutrals = 0;
+              var valuePositives = 0;
+              var valueNegatives = 0;
+
               var newSearch = searchInfoDataByDate(sentimentalData, new Date(quotes[i].date));
               if (newSearch !== undefined) {
+                valueNeutrals = newSearch.neutrals;
+                valuePositives = newSearch.positives;
+                valueNegatives = newSearch.negatives; 
                 numNeutrals += newSearch.neutrals;
                 numPositives += newSearch.positives;
                 numNegatives += newSearch.negatives;
@@ -153,9 +175,9 @@ angular.module('finsentaApp')
               var scoreN = searchNegativeScoreByDate(sentimentalData, new Date(quotes[i].date)) + numNegatives;
               
 
-              positiveActions.push([(new Date(quotes[i].date)).getTime(), scoreP]);
-              negativeActions.push([(new Date(quotes[i].date)).getTime(), scoreN]);
-              neutralActions.push([(new Date(quotes[i].date)).getTime(), numNeutrals]);
+              positiveActions.push([(new Date(quotes[i].date)).getTime(), valueMention * valuePositives]);
+              negativeActions.push([(new Date(quotes[i].date)).getTime(), valueMention * valueNegatives]);
+              neutralActions.push([(new Date(quotes[i].date)).getTime(), valueMention * valueNeutrals]);
             }
 
             Highcharts.setOptions({
@@ -224,7 +246,7 @@ angular.module('finsentaApp')
                             data: positiveActions,
                             color: '#5fc75f',
                             tooltip: {
-                                valueDecimals: 4
+                                valueDecimals: 2
                             }
                           },
                           {
@@ -233,7 +255,7 @@ angular.module('finsentaApp')
                             data: neutralActions,
                             color: '#FFA500',
                             tooltip: {
-                                valueDecimals: 0
+                                valueDecimals: 2
                             }
                           },
                           {
@@ -242,7 +264,7 @@ angular.module('finsentaApp')
                             data: negativeActions,
                             color: '#bf2600',
                             tooltip: {
-                                valueDecimals: 0
+                                valueDecimals: 2
                             }
                           }]
             });
