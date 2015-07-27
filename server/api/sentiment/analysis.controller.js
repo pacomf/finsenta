@@ -5,6 +5,7 @@ var KeyGroup = require('./keygroup.model');
 var Query = require('./query.model');
 var SearchResult = require('./searchresult.model');
 var UserValue = require('./uservalue.model');
+var Value = require('./value.model');
 var async = require('async');
 var config = require('../../tasks/config');
 var U = require('./utilities');
@@ -219,11 +220,14 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
   while (loopTime < eDate) {
       var localTime = new Date(loopTime);
       loopTime.setHours(0,0,0,0);
-            days.push(localTime);
-      loopTime.setDate(loopTime.getDate() + 1);      
+      days.push(localTime);
+      loopTime.setDate(loopTime.getDate() + 1);
+      
   }
+  //console.log(days);
   //use loopDay as you wish
   async.eachSeries(days, function(day, callback) {
+      //console.log(queryId);
       var lastDate = new Date();
       lastDate.setDate(day.getDate()+1)
       lastDate.setHours(0,0,0,0);
@@ -236,25 +240,26 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
         }
       }, function (err, searchR) {
         if (err) {
-          console.log("searchR error");
-          callback(err);
+          console.log("Resultado error");
+          callback();
         }
         else if (searchR === undefined || searchR === null || searchR.length === 0) {
-          console.log("searchR undefined");
+          console.log("Resutado undefined");
           callback();
         } else {
           var data = {};
-          data["value"] = 0;
+          data["value_positives"] = 0;
+          data["value_negatives"] = 0;
           var num_positives = 0;
           var num_negatives = 0;
           var num_neutrals = 0;
           for (var i = searchR.length - 1; i >= 0; i--) {
             if (searchR[i].sentimentalResult === 'positive') {
               num_positives++;
-              data["value"] = data["value"] + Number(searchR[i].score);
+              data["value_positives"] = data["value_positives"] + Number(searchR[i].score);
             } else if (searchR[i].sentimentalResult === 'negative') {
               num_negatives++;
-              data["value"] = data["value"] + Number(searchR[i].score);
+              data["value_negatives"] = data["value_negatives"] + Math.abs(Number(searchR[i].score));
             } else {
               num_neutrals++;
             }
@@ -264,6 +269,7 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
           infoData["positives"] = num_positives;
           infoData["negatives"] = num_negatives;
           infoData["neutrals"] = num_neutrals;
+
           data["infoData"] = infoData;
           result.push(data);
           callback();
@@ -279,8 +285,8 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
         console.log('A file failed to process');
       } else {
         arrayResult = arrayResult.concat(result);
-        //console.log("Pepeeeee");
-        //console.log(arrayResult);
+        console.log("Pepeeeee");
+        console.log(arrayResult);
         callbackB();
       }
     });
@@ -289,25 +295,47 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
 
   /**
  * Recibe:
- *    req.query.id = El identificador de lo que queremos mostrar (UserValue or GroupUserValue)
- *    req.query.type = default : 0 -> UserValue;
- *                               1 -> GroupUserValue
+ *    req.query.id = El identificador del value
  *    req.query.init_date = Fecha de inicio de la búsqueda
  *    req.query.end_date = Fecha de fin de la búsqueda
- */
+ */ 
 exports.sentimentalAnalysis = function(req, res) {
 
-  UserValue.findById(req.query.id, function (err, uservalue) {
-    if ((uservalue !== null) && (uservalue !== undefined)){
-      async.eachSeries(uservalue.query, function(query, callback) {
-        getDataByQueryId(callback, query, req.query.init_date, req.query.end_date);
-      }, function(err){
-        res.json(200, arrayResult);
-      });
-     } else {
-       res.json(200, arrayResult);
-     }
+  console.log("Sentimental Analysis: ");
+  console.log(req.query);
+
+  arrayResult = [];
+
+  Value.findOne({ name : req.query.valueName}, function(err, value) {
+    console.log("Value:");
+    console.log(value);
+    UserValue.find({ value : value._id} , function (err, uservalues) {
+      if ((uservalues !== null) && (uservalues !== undefined)){
+        async.eachSeries(uservalues, function(uservalue, callbackUV) {
+          async.eachSeries(uservalue.query, function(query, callback) {
+            //console.log("Calllll");
+            console.log("GetDataByQuery: ");
+            console.log(query);
+            getDataByQueryId(callback, query, req.query.init_date, req.query.end_date);
+          }, function(err){
+            console.log("Error 1");
+            //console.log("--" + arrayResult);
+            callbackUV();
+          });
+       }, function(err){
+          console.log("Error 2");
+            //console.log("--" + arrayResult);
+            res.json(200, arrayResult);
+       });
+      } else {
+          console.log("SentimentalAnalysis: ");
+          console.log(arrayResult);
+          res.json(200, arrayResult);
+      }
+    });  
   });
+
+  
 }
 
 function areEqualsDate(date1, date2) {

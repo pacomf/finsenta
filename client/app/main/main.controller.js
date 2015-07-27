@@ -80,13 +80,13 @@ angular.module('finsentaApp')
       
     });
 
-    $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
-
         var lastDate = quotes[quotes.length-1].date;
         var firstDate = quotes[0].date;
-        $http.get('/api/sentiment/sentimental', { params: { 'id': '55a2543fd60126250c03b7d0', 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
+        $http.get('/api/sentiment/sentimental', { params: { 'valueName': companyID, 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
+            console.log("Sentimental ok");
 
             $scope.sentimentalData = sentimentalData;
+
             /*for (var i in tweets.statuses){
               var url = urlTweet+tweets.statuses[i].id_str;
               console.log(tweets.statuses[i].text);
@@ -95,20 +95,65 @@ angular.module('finsentaApp')
             var stock = [];
             var positiveActions = [];
             var negativeActions = [];
+            var neutralActions = [];
             var minimumStock = 99999;
+            var maximumStock = 0;
+
+            var numPositives = 0;
+            var numNegatives = 0;
+            var numNeutrals = 0;
+
+            var min = 10000
+            var max = 0
+            var minScore = 10000
+            var maxScore = 0
+            var score = 0;
+            for (var j in quotes) {
+              if (quotes[j].close < min) {
+                min = quotes[j].close - 1;
+              }
+              if (quotes[j].close > max) {
+                max = quotes[j].close + 1;
+              }
+              score = searchPositiveScoreByDate(sentimentalData, new Date(quotes[j].date));
+              if (score < minScore) {
+                minScore = score;
+              }
+              if (score > maxScore) {
+                maxScore = score;
+              }
+            };
+            min = min - 1;
+            max = max + 1;
+
+            var numNeutrals = Math.floor(min);
+            var numPositives = Math.floor(min);
+            var numNegatives = Math.floor(min);
+
             for (var i in quotes){
-              stock.push([(new Date(quotes[i].date)).getTime(), quotes[i].close]);
-              var score = searchInfoByDate(sentimentalData, new Date(quotes[i].date));
-              score = score * 28;
-              if (score >= 0) {
-                positiveActions.push([(new Date(quotes[i].date)).getTime(), score]);
-              } else {
-                negativeActions.push([(new Date(quotes[i].date)).getTime(), -score]);
-                //negativeActions.push([(new Date(quotes[i].date)).getTime(), quotes[i].close/1.07]);
-              }
               if (minimumStock > quotes[i].close){
-                minimumStock = quotes[i].close - 5;
+                minimumStock = quotes[i].close;
               }
+              if (maximumStock < quotes[i].close){
+                maximumStock = quotes[i].close;
+              }
+              stock.push([(new Date(quotes[i].date)).getTime(), quotes[i].close]);
+
+              
+              var newSearch = searchInfoDataByDate(sentimentalData, new Date(quotes[i].date));
+              if (newSearch !== undefined) {
+                numNeutrals += newSearch.neutrals;
+                numPositives += newSearch.positives;
+                numNegatives += newSearch.negatives;
+              }  
+
+              var scoreP = searchPositiveScoreByDate(sentimentalData, new Date(quotes[i].date)) + numPositives;
+              var scoreN = searchNegativeScoreByDate(sentimentalData, new Date(quotes[i].date)) + numNegatives;
+              
+
+              positiveActions.push([(new Date(quotes[i].date)).getTime(), scoreP]);
+              negativeActions.push([(new Date(quotes[i].date)).getTime(), scoreN]);
+              neutralActions.push([(new Date(quotes[i].date)).getTime(), numNeutrals]);
             }
 
             Highcharts.setOptions({
@@ -137,7 +182,7 @@ angular.module('finsentaApp')
                                 pAS.addPoint([x, y/1.05], true, true);
                                 nAS.addPoint([x, y/1.1], true, true);
                                 // TODO: Ajustar minimumStock si es necesario y actualizar yAxis.min
-                            }, 1000);)*/
+                            }, 1000);*/
                         }
                     }
                 },
@@ -160,7 +205,8 @@ angular.module('finsentaApp')
                     title: {
                         text: 'Stock Cotization'
                     },
-                    min: minimumStock
+                    min: minimumStock,
+                    max: maximumStock
                 },
 
                 series : [{
@@ -177,6 +223,15 @@ angular.module('finsentaApp')
                             color: '#5fc75f',
                             tooltip: {
                                 valueDecimals: 4
+                            }
+                          },
+                          {
+                            type: 'column',
+                            name: 'Neutral Actions',
+                            data: neutralActions,
+                            color: '#FFA500',
+                            tooltip: {
+                                valueDecimals: 0
                             }
                           },
                           {
@@ -202,7 +257,41 @@ angular.module('finsentaApp')
           return arr[i].value;
         }
       };
+
+    function searchPositiveScoreByDate(arr, date) {
+      if (arr != null) { 
+        for (var i = arr.length - 1; i >= 0; i--) {
+          var mDate = new Date(arr[i].date);
+          if (areEquals(date, mDate)) {
+            return arr[i].value_positives;
+          }
+        };
+      }
       return 0;
+    }
+
+    function searchNegativeScoreByDate(arr, date) {
+      if (arr != null) { 
+        for (var i = arr.length - 1; i >= 0; i--) {
+          var mDate = new Date(arr[i].date);
+          if (areEquals(date, mDate)) {
+            return arr[i].value_negatives;
+          }
+        };
+      }
+      return 0;
+    }
+
+    function searchInfoDataByDate(arr, date) {
+      if (arr != null) { 
+        for (var i = arr.length - 1; i >= 0; i--) {
+          var mDate = new Date(arr[i].date);
+          if (areEquals(date, mDate)) {
+            return arr[i].infoData;
+          }
+        };
+      }
+      return undefined;
     }
 
     function areEquals(date1, date2) {
