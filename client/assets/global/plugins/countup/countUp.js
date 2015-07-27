@@ -34,6 +34,7 @@ function countUp(target, startVal, endVal, decimals, duration, options) {
             return id;
         }
     }
+
     if (!window.cancelAnimationFrame) {
         window.cancelAnimationFrame = function(id) {
             clearTimeout(id);

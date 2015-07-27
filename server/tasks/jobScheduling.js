@@ -19,6 +19,8 @@ var Jsonfile = require('jsonfile')
  
 var fileJSON = './server/tasks/tmp/dataJobs.json';
 
+var dateTweets = null;
+
 exports.scheduleRss = function (){
 
 	var dataJobs = [];
@@ -39,6 +41,7 @@ exports.scheduleRss = function (){
 }
 
 exports.loadJobs = function(){
+
 	var agenda = new Agenda();
 	agenda.database('localhost:27017/finsenta-jobs', 'finsentaJobs');
 	agenda._db._emitter._maxListeners = 0;
@@ -83,10 +86,28 @@ function searchTweets (value, keyword, done){
 				 	"screen_name": "pacomartinfdez"
 				 },
 				 "id_str":"250075927172759552",
-				 "created_at":"Mon Sep 24 03:35:21 +0000 2012"
+				 "created_at":new Date()
 				 };
+
+
 	tweetsMock.push(tMock);
 	tweetsMock.push(tMock);
+
+	if (value === "IDR.MC"){
+		tweetsMock = [];
+		tMock = {"text":"Uuuuuuuuuuuuuuuuuuuuuu",
+				 "user":{
+				 	"profile_image_url":"https://pbs.twimg.com/profile_images/584641368598929408/4TYLDoM5_400x400.jpg",
+				 	"name": "Dr Martín",
+				 	"screen_name": "pacomartinfdez"
+				 },
+				 "id_str":"250075927172759552",
+				 "created_at":new Date()
+				 };
+		 tweetsMock.push(tMock);
+		 tweetsMock.push(tMock);
+
+	}
 
 	var tweetsParser=[];
 	var auxTweet = {};
@@ -118,26 +139,25 @@ function searchTweets (value, keyword, done){
 		index = 0;
 	} else {
       	U.lastTweetInfo[index].num += countMock;
-		U.lastTweetInfo[index].tweets = tweetsParser;
+		U.lastTweetInfo[index].tweets = U.lastTweetInfo[index].tweets.concat(tweetsParser);
 	}
 	//console.log(U.lastTweetInfo);
+
 	done();
 	return;
 
-
-
 	client.get('search/tweets', {q: keyword}, function(error, tweets, response){
 		if (error){
-			console.log("Error Twitter: "+error.name+"|"+error.message);
+			console.log("Error Twitter: "+error.name+"|"+error.message+"t: "+tweets);
 			done();
 			return;
 		}
 		console.log("Nuevos Tweets para: "+value);
 
 		var tweetsParser=[];
-		var auxTweet = {};
-
+		
 		for (var i = tweets.statuses.length - 1; i >= 0; i--) {
+			var auxTweet = {};
 			auxTweet.text=tweets.statuses[i].text;
 			auxTweet.profile_image_url = tweets.statuses[i].user.profile_image_url;
 			auxTweet.name = tweets.statuses[i].user.name;
@@ -175,6 +195,8 @@ exports.loadTwitter = function(){
 	agenda.database('localhost:27017/finsenta-jobs', 'finsentaJobs');
 	agenda._db._emitter._maxListeners = 0;
 
+	var job;
+
 	agenda.define('analyzeTwitter', function(job, done) {
 		var data = job.attrs.data;
   		var nameV = data.nameV;
@@ -182,7 +204,6 @@ exports.loadTwitter = function(){
   		searchTweets(nameV, keyword, done);
 	});
 
-	var job;
 	var valuesQuery = {};
 
 	UserValue.find({}, function (err, userValues){
@@ -206,6 +227,16 @@ exports.loadTwitter = function(){
 				});
 			});
 		};
+		agenda.define('updateParamsTwitter', function(job, done) {
+			console.log("Seteando numero total de Tweets");
+			for (var key in U.lastTweetInfo){
+				U.lastTweetInfo[key].num = 0;
+			}
+			done();
+		});
+
+		job = agenda.create('updateParamsTwitter', {});
+		job.repeatEvery('1 day').save();
 		agenda.start();
 	});
 }
@@ -215,6 +246,7 @@ function formatDatePretty(date) {
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear(),
+        seconds = '' +d.getSeconds(),
         minutes = '' + d.getMinutes(),
         hours = '' + d.getHours();
 
@@ -222,7 +254,7 @@ function formatDatePretty(date) {
     if (day.length < 2) day = '0' + day;
     if (hours.length < 2) hours = '0' + hours;
     if (minutes.length < 2) minutes = '0' + minutes;
-
+    if (seconds.length < 2) seconds = '0' + seconds
     var dateStr = day+"/"+month+"/"+year+" "+hours+":"+minutes;
 
     return dateStr;

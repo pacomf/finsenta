@@ -54,12 +54,7 @@ angular.module('finsentaApp')
 
     // Obtenemos las noticias (searchresults)
     $http.get('/api/sentiment/searchresult').success(function(values) {
-      console.log("Aquiiiiii");
       $scope.searchresults = values;
-      console.log("Search results:")
-      console.log($scope.searchresults);
-      console.log("Selected Option:")
-      console.log($scope.selectedOption);
       $scope.positiveresults = $filter('filter')($scope.searchresults, { sentimentalResult : 'positive' , value: $scope.selectedOption._id});
       $scope.neutralresults = $filter('filter')($scope.searchresults, { sentimentalResult : 'neutral' , value: $scope.selectedOption._id});
       $scope.negativeresults = $filter('filter')($scope.searchresults, { sentimentalResult : 'negative', value: $scope.selectedOption._id});
@@ -67,12 +62,22 @@ angular.module('finsentaApp')
 
     $http.get('/api/sentiment/tweetInfo/'+ companyID).success(function(info) {
       $scope.tweets = info.tweets;
-      $scope.numTweets = info.num;
-      // TODO: Refrescar el DIV para actualizar los nuevos datos
-      setTimeout(function() {
-        animateNumber();
-        $(".live-tile").liveTile();
-      }, 2000);
+      $scope.numTweets = (info.num !== undefined) ? info.num : 0;
+
+      if(!$scope.$$phase) {
+        $scope.$apply(function() {
+            setTimeout(function() {
+              animateNumber();
+              liveTile();
+            }, 2000);
+        });
+      } else {
+          setTimeout(function() {
+            animateNumber();
+            liveTile();
+          }, 2000);
+      }
+      
     });
 
     $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
@@ -80,8 +85,6 @@ angular.module('finsentaApp')
         var lastDate = quotes[quotes.length-1].date;
         var firstDate = quotes[0].date;
         $http.get('/api/sentiment/sentimental', { params: { 'id': '55a2543fd60126250c03b7d0', 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
-            
-            $('.loader-overlay').addClass('loaded');
 
             $scope.sentimentalData = sentimentalData;
             /*for (var i in tweets.statuses){
@@ -119,6 +122,8 @@ angular.module('finsentaApp')
                 chart : {
                     events : {
                         load : function () {
+
+                          $('.loader-overlay').addClass('loaded');
 
                             // set up the updating of the chart each second
                             /*var stockS = this.series[0];

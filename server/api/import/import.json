@@ -44,8 +44,7 @@
 		 "index": "^IBEX",
 		 "query":[
 		 	{"keywords":[
-		 		{"name": "inditex"},
-		 		{"name": "zara"}
+		 		{"name": "inditex"}
 		 	 ],
 		 	 "keygroup":"1"
 		 	},

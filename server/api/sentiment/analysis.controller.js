@@ -52,8 +52,6 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
   var now = new Date();
 
-  return;
-
   console.log("["+now+"]. Analizando RSS "+urlRss);
 
   var FeedParser = require('feedparser')
@@ -145,6 +143,9 @@ function parseDataRss(keyDataId, data, url, title, date, value, query, done){
               console.log("Limite interno alcanzado de consulta a AlchemyAPI");
               done();
               return;
+            } 
+            if(config.alchemyLimit === config.maxAlchemyLimit){
+               config.alchemyLimit=0;
             }
             config.alchemyLimit++;
             config.lastDateAnalysis =  new Date();
@@ -207,7 +208,6 @@ function formatDate(date) {
 
 function getDataByQueryId (callbackB, queryId, initDate, endDate) {
 
-  console.log("Estoy");
   var iDate = new Date(initDate);
   iDate.setHours(0,0,0,0);
   var eDate = new Date(endDate);
@@ -216,22 +216,14 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
   var days = [];
   var loopTime = iDate;
 
-  while(loopTime < eDate)
-  {
+  while (loopTime < eDate) {
       var localTime = new Date(loopTime);
       loopTime.setHours(0,0,0,0);
             days.push(localTime);
-      loopTime.setDate(loopTime.getDate() + 1);
-      console.log("-----------");
-      console.log(loopTime);
-      console.log(eDate);
-      console.log(days);
-      
+      loopTime.setDate(loopTime.getDate() + 1);      
   }
-  console.log(days);
   //use loopDay as you wish
   async.eachSeries(days, function(day, callback) {
-      console.log(queryId);
       var lastDate = new Date();
       lastDate.setDate(day.getDate()+1)
       lastDate.setHours(0,0,0,0);
@@ -251,8 +243,6 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
           console.log("searchR undefined");
           callback();
         } else {
-          console.log("SearchR");
-          console.log(searchR);
           var data = {};
           data["value"] = 0;
           var num_positives = 0;
@@ -269,14 +259,11 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
               num_neutrals++;
             }
             data["date"] = searchR[i].dataDate;
-            console.log("datDateeee : " + data["date"]);
           }
           var infoData = {};
           infoData["positives"] = num_positives;
           infoData["negatives"] = num_negatives;
           infoData["neutrals"] = num_neutrals;
-          console.log("Info Data: ");
-          console.log(infoData);
           data["infoData"] = infoData;
           result.push(data);
           callback();
@@ -291,15 +278,12 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
         // All processing will now stop.
         console.log('A file failed to process');
       } else {
-        console.log(result);
-        console.log('All files have been processed successfully');
         arrayResult = arrayResult.concat(result);
         //console.log("Pepeeeee");
         //console.log(arrayResult);
         callbackB();
       }
     });
-    console.log("Algoooo");
 
   }
 
@@ -313,14 +297,11 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
  */
 exports.sentimentalAnalysis = function(req, res) {
 
-  console.log(req.query);
   UserValue.findById(req.query.id, function (err, uservalue) {
     if ((uservalue !== null) && (uservalue !== undefined)){
       async.eachSeries(uservalue.query, function(query, callback) {
-        console.log("Calllll");
         getDataByQueryId(callback, query, req.query.init_date, req.query.end_date);
       }, function(err){
-        console.log("--" + arrayResult);
         res.json(200, arrayResult);
       });
      } else {

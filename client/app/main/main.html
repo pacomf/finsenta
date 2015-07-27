@@ -16,7 +16,7 @@
                <div class="panel-content" style="padding: 20px;">
                  <img src="./assets/admin/layout1/img/dkn-logo-header-white.png" style="height: 50px; float: right; display: block;">
                  <h1 style="color: white"><strong>IBEX 35</strong> Sentiment</h1>
-                 <p style="color: white">Calculamos el sentimiento social sobre un valor en base a opiniones obtenidas de noticias y redes sociales, <br>filtrándolas y valorándolas con nuestro algoritmo inteligente</p>
+                 <p style="color: white; text-align: right;"></br>We calculate the social feeling about a stock based on </br> opinions obtained from news and social networks, </br>by filtering and assessing using our deep learning algorithm.</p>
                </div>
              </div>
            </div>
@@ -31,7 +31,7 @@
 
                     <ul id="value_list" class="nav nav-tabs" style="height:400px; overflow-y: scroll">
                       <li ng-repeat="item in items" ng-if="$index == 0" class="lines-2 active">
-                        <a href="#" ng-click="changedValue(item);" id="yahoo" data-toggle="tab" data-color="green" data-value="+6.214%">
+                        <a ng-click="changedValue(item);" data-toggle="tab">
                           <div class="clearfix">
                             <span class="title pull-left">{{item.name}}</span>
                             <!--span class="pull-right">{{item.description}}</span-->
@@ -43,7 +43,7 @@
                         </a>
                       </li>
                       <li ng-repeat="item in items" ng-if="$index > 0" class="lines-2">
-                        <a href="#yahoo-tab" ng-click="changedValue(item);" id="yahoo" data-toggle="tab" data-color="green" data-value="+6.214%">
+                        <a ng-click="changedValue(item);" data-toggle="tab">
                           <div class="clearfix">
                             <span class="title pull-left">{{item.name}}</span>
                             <!--span class="pull-right">{{item.description}}</span-->
@@ -80,7 +80,7 @@
                       <i class="fa fa-twitter bg-blue"></i>
                     </div>
                     <div class="right">
-                      <p class="number countup" data-from="0" data-to="{{numTweets}}">0</p>
+                      <p id="numberTweets" class="number countup" data-from="0" data-to="{{numTweets}}" data-delay="2000">0</p>
                       <p class="text">Tweets</p>
                     </div>
                   </div>
@@ -92,7 +92,19 @@
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                   <div class="panel no-bd bd-3 panel-stat">
                     <div class="panel-body p-10 p-b-0">
-                          <div class="live-tile" data-mode="carousel" data-direction="vertical" data-delay="4000" style="width: 100%; height: 68px">
+
+                          <div ng-if="numTweets === 0" class="panel-content widget-info">
+                            <div class="row">
+                              <div class="left" style="margin-top: -10px; padding-bottom: 10px;">
+                                <i class="fa fa-frown-o bg-red"></i>
+                              </div>
+                              <div class="right">
+                                <p class="text">No Tweets Found.</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div ng-if="numTweets > 0" class="live-tile" data-mode="carousel" data-direction="vertical" data-delay="4000" style="width: 100%; height: 68px">
                             <div ng-repeat="tweet in tweets">
                               <img src="{{tweet.profile_image_url}}" alt="Image Profile" height="60" width="60" class="img-circle" style="border:2px solid#4584d1; float: left">
                               <div class="stat-title" style="margin-left: 60px">
@@ -121,16 +133,30 @@
                     <span class="pull-right badge badge-primary">{{positiveresults.length}}</span>
                   </div>
                 </div>
+
                 <div class="panel-content widget-news">
-                  <div class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
-                    <a ng-repeat="searchresult in positiveresults" href="{{searchresult.urlResult}}" class="message-item media">
+
+                  <div ng-if="positiveresults.length === 0" class="widget-info" style="height: 400px">
+                    <div class="row" style="margin-left: 50px">
+                      <div class="left">
+                        <i class="fa fa-frown-o bg-red"></i>
+                      </div>
+                      <div class="right" style="margin-top:10px;">
+                        <p class="text">No News Found.</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div ng-if="positiveresults.length > 0" class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
+                    <a ng-repeat="searchresult in positiveresults" href="{{searchresult.urlResult}}" class="message-item media" target="_blank">
                       <div class="media">
                         <div class="media-body">
                           <div class="pull-left p-r-10">
                             <i class="fa fa-newspaper-o pull-left"></i>
                           </div>
                           <div>
-                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy'}}</small>
+                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy HH:mm'}}</small>
                             <h4 class="c-dark">{{searchresult.titleResult}}</h4>
                             <!--p class="f-14 c-gray">{{searchresult.urlResult}}</p-->
                           </div>
@@ -152,15 +178,27 @@
                   </div>
                 </div>
                 <div class="panel-content widget-news">
-                  <div class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
-                    <a ng-repeat="searchresult in neutralresults" href="{{searchresult.urlResult}}" class="message-item media">
+
+                  <div ng-if="neutralresults.length === 0" class="widget-info" style="height: 400px">
+                    <div class="row" style="margin-left: 50px">
+                      <div class="left">
+                        <i class="fa fa-frown-o bg-red"></i>
+                      </div>
+                      <div class="right" style="margin-top:10px;">
+                        <p class="text">No News Found.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div ng-if="neutralresults.length > 0" class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
+                    <a ng-repeat="searchresult in neutralresults" href="{{searchresult.urlResult}}" class="message-item media" target="_blank">
                       <div class="media">
                         <div class="media-body">
                           <div class="pull-left p-r-10">
                             <i class="fa fa-newspaper-o pull-left"></i>
                           </div>
                           <div>
-                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy'}}</small>
+                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy HH:mm'}}</small>
                             <h4 class="c-dark">{{searchresult.titleResult}}</h4>
                             <!--p class="f-14 c-gray">{{searchresult.urlResult}}</p-->
                           </div>
@@ -181,15 +219,27 @@
                   </div>
                 </div>
                 <div class="panel-content widget-news">
-                  <div class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
-                    <a ng-repeat="searchresult in negativeresults" href="{{searchresult.urlResult}}" class="message-item media">
+
+                  <div ng-if="negativeresults.length === 0" class="widget-info" style="height: 400px">
+                    <div class="row" style="margin-left: 50px">
+                      <div class="left">
+                        <i class="fa fa-frown-o bg-red"></i>
+                      </div>
+                      <div class="right" style="margin-top:10px;">
+                        <p class="text">No News Found.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div ng-if="negativeresults.length > 0" class="withScroll" data-height="400" style="height: 400px; overflow-y: scroll">
+                    <a ng-repeat="searchresult in negativeresults" href="{{searchresult.urlResult}}" class="message-item media" target="_blank">
                       <div class="media">
                         <div class="media-body">
                           <div class="pull-left p-r-10">
                             <i class="fa fa-newspaper-o pull-left"></i>
                           </div>
                           <div>
-                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy'}}</small>
+                            <small class="pull-right">{{searchresult.dataDate | date:'dd/MM/yyyy HH:mm'}}</small>
                             <h4 class="c-dark">{{searchresult.titleResult}}</h4>
                             <p class="f-14 c-gray">{{searchresult.urlResult}}</p>
                           </div>
@@ -208,16 +258,14 @@
 
 
           <div class="footer">
-            <div class="copyright">
               <p class="pull-left sm-pull-reset">
                 <span>Copyright <span class="copyright">©</span> 2015 </span>
                 <span>data-k-now</span>.
                 <span>All rights reserved. </span>
               </p>
               <p class="pull-right sm-pull-reset">
-                <span><a href="#" class="m-r-10">Información</a></span>
+                <span><a href="http://fg.ull.es/launchtf/que-es-launchtf/" class="m-r-10" target="_blank">♥ Made in Canary Island with Love</a></span>
               </p>
-            </div>
           </div>
         </div>
         <!-- END PAGE CONTENT -->

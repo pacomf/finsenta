@@ -5,7 +5,7 @@ var ScheduleController = require('./jobScheduling');
 
 var alchemyLimit = 0;
 
-exports.maxAlchemyLimit = 30;
+exports.maxAlchemyLimit = 1000;
 
 exports.alchemyLimit = alchemyLimit;
 
@@ -25,6 +25,6 @@ exports.init = function(app){
 	// recargara de forma infinita el sistema. Ejecutar y cuando salga mensajito de Jobs creados, parar.
 	//ScheduleController.scheduleRss();
 
-	ScheduleController.loadJobs();
+	//ScheduleController.loadJobs();
 	ScheduleController.loadTwitter();
 }

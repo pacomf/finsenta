@@ -795,8 +795,8 @@ function liveTile() {
     if ($('.live-tile').length && $.fn.liveTile) {
         $('.live-tile').each(function () {
             $(this).liveTile("destroy", true); /* To get new size if resize event */
-            tile_height = $(this).data("height") ? $(this).data("height") : $(this).find('.panel-body').height() + 52;
-            $(this).height(tile_height);
+            //tile_height = $(this).data("height") ? $(this).data("height") : $(this).find('.panel-body').height() + 52;
+            //$(this).height(tile_height);
             $(this).liveTile({
                 speed: $(this).data("speed") ? $(this).data("speed") : 500, // Start after load or not
                 mode: $(this).data("animation-easing") ? $(this).data("animation-easing") : 'carousel', // Animation type: carousel, slide, fade, flip, none
@@ -842,7 +842,7 @@ function barCharts() {
 function animateNumber(){
     $('.countup').each(function(){
         from     = $(this).data("from") ? $(this).data("from") : 0;
-        to       = $(this).data("to") ? $(this).data("to") : 100;
+        to       = $(this).attr("data-to") ? $(this).attr("data-to") : 0;
         duration = $(this).data("duration") ? $(this).data("duration") : 2;
         delay    = $(this).data("delay") ? $(this).data("delay") : 1000;
         decimals = $(this).data("decimals") ? $(this).data("decimals") : 0;
@@ -853,6 +853,7 @@ function animateNumber(){
           prefix : $(this).data("prefix") ? $(this).data("  prefix") : '',
           suffix : $(this).data("suffix") ? $(this).data("suffix") : ''
         }
+        
         var numAnim = new countUp($(this).get(0),from, to, decimals, duration, options);
         setTimeout(function(){
             numAnim.start();
