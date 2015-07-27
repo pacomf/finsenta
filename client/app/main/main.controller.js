@@ -80,6 +80,8 @@ angular.module('finsentaApp')
       
     });
 
+
+    $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
         var lastDate = quotes[quotes.length-1].date;
         var firstDate = quotes[0].date;
         $http.get('/api/sentiment/sentimental', { params: { 'valueName': companyID, 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
@@ -244,11 +246,9 @@ angular.module('finsentaApp')
                             }
                           }]
             });
-          
-
         });
-    });
-    }
+      });
+  }
 
     function searchInfoByDate(arr, date) {
       for (var i = arr.length - 1; i >= 0; i--) {
@@ -256,7 +256,8 @@ angular.module('finsentaApp')
         if (areEquals(date, mDate)) {
           return arr[i].value;
         }
-      };
+      }
+    }
 
     function searchPositiveScoreByDate(arr, date) {
       if (arr != null) { 
@@ -320,4 +321,5 @@ angular.module('finsentaApp')
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     }; 
-  });
+
+});
