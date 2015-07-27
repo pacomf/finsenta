@@ -171,12 +171,12 @@ angular.module('finsentaApp')
                 numNegatives += newSearch.negatives;
               }  
 
-              var scoreP = searchPositiveScoreByDate(sentimentalData, new Date(quotes[i].date)) + numPositives;
-              var scoreN = searchNegativeScoreByDate(sentimentalData, new Date(quotes[i].date)) + numNegatives;
+              var scoreP = searchPositiveScoreByDate(sentimentalData, new Date(quotes[i].date));
+              var scoreN = searchNegativeScoreByDate(sentimentalData, new Date(quotes[i].date));
               
 
-              positiveActions.push([(new Date(quotes[i].date)).getTime(), valueMention * valuePositives]);
-              negativeActions.push([(new Date(quotes[i].date)).getTime(), valueMention * valueNegatives]);
+              positiveActions.push([(new Date(quotes[i].date)).getTime(), valueMention * (scoreP + valuePositives)]);
+              negativeActions.push([(new Date(quotes[i].date)).getTime(), valueMention * (scoreN + valueNegatives)]);
               neutralActions.push([(new Date(quotes[i].date)).getTime(), valueMention * valueNeutrals]);
             }
 
