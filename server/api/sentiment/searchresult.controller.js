@@ -5,7 +5,7 @@ var SearchResult = require('./searchresult.model');
 
 // Get list of searchresult
 exports.index = function(req, res) {
-  SearchResult.find(function (err, searchresults) {
+  SearchResult.find({}).sort({dataDate: -1}).exec(function (err, searchresults) {
     if(err) { return handleError(res, err); }
     return res.json(200, searchresults);
   });

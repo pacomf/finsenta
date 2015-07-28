@@ -82,7 +82,7 @@ angular.module('finsentaApp')
 
 
     $http.get('/api/things/quote/'+ companyID).success(function(quotes) {
-        var lastDate = quotes[quotes.length-1].date;
+        var lastDate = new Date();
         var firstDate = quotes[0].date;
         $http.get('/api/sentiment/sentimental', { params: { 'valueName': companyID, 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
 
@@ -133,17 +133,38 @@ angular.module('finsentaApp')
               var scoreP = searchPositiveScoreByDate(sentimentalData, new Date(quotes[i].date));
               var scoreN = searchNegativeScoreByDate(sentimentalData, new Date(quotes[i].date));
 
-              console.log("MV: "+maxValues+"|MS: "+maximumStock+"|Close: "+quotes[i].close+"|S-VP: "+scoreP+"-"+valuePositives+"|S-VN: "+scoreN+"-"+valueNegatives+"|N: "+valueNeutrals);
-              var ret = calculateValueWeighted(maxValues, minimumStock, maximumStock, quotes[i].close, (scoreP+valuePositives), (scoreN+valueNegatives), valueNeutrals);
-              console.log("Hola: "+ret.positives+":"+ret.negatives+":"+ret.neutrals);
-              
-              
+              //console.log("MV: "+maxValues+"|MS: "+maximumStock+"|Close: "+quotes[i].close+"|S-VP: "+scoreP+"-"+valuePositives+"|S-VN: "+scoreN+"-"+valueNegatives+"|N: "+valueNeutrals);
+              var ret = calculateValueWeighted(maxValues, minimumStock, maximumStock, (scoreP+valuePositives), (scoreN+valueNegatives), valueNeutrals);
 
               positiveActions.push([(new Date(quotes[i].date)).getTime(), ret.positives]);
               negativeActions.push([(new Date(quotes[i].date)).getTime(), ret.negatives]);
               neutralActions.push([(new Date(quotes[i].date)).getTime(), ret.neutrals]);
               holderActions.push([(new Date(quotes[i].date)).getTime(), minimumStock]);
             }
+
+            // Para el día actual:
+            var valueNeutrals = 0;
+            var valuePositives = 0;
+            var valueNegatives = 0;
+
+            var newSearch = searchInfoDataByDate(sentimentalData, new Date());
+            if (newSearch !== undefined) {
+              valueNeutrals = newSearch.neutrals;
+              valuePositives = newSearch.positives;
+              valueNegatives = newSearch.negatives; 
+            }  
+
+            var scoreP = searchPositiveScoreByDate(sentimentalData, new Date());
+            var scoreN = searchNegativeScoreByDate(sentimentalData, new Date());
+
+            //console.log("MV: "+maxValues+"|MS: "+maximumStock+"|Close: "+quotes[i].close+"|S-VP: "+scoreP+"-"+valuePositives+"|S-VN: "+scoreN+"-"+valueNegatives+"|N: "+valueNeutrals);
+            var ret = calculateValueWeighted(maxValues, minimumStock, maximumStock, (scoreP+valuePositives), (scoreN+valueNegatives), valueNeutrals);
+
+            positiveActions.push([(new Date()).getTime(), ret.positives]);
+            negativeActions.push([(new Date()).getTime(), ret.negatives]);
+            neutralActions.push([(new Date()).getTime(), ret.neutrals]);
+            holderActions.push([(new Date()).getTime(), minimumStock]);
+
 
             Highcharts.setOptions({
               global : {
@@ -297,7 +318,7 @@ angular.module('finsentaApp')
       return undefined;
     }
 
-    function calculateValueWeighted(maxValues, minStock, maxStock, stock, pos, neg, neu){
+    function calculateValueWeighted(maxValues, minStock, maxStock, pos, neg, neu){
       var ret = {};
       var totalValue = pos+neg+neu;
       var weightValue = totalValue/maxValues;

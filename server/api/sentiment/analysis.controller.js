@@ -177,10 +177,21 @@ function parseDataRss(keyDataId, data, url, title, date, value, query, done){
                 searchResult.dataDate = date;
                 searchResult.save(); 
               } else {
-                console.log("ERROR AlchemyAPI: "+response["statusInfo"]);
+                /*console.log("ERROR AlchemyAPI: "+response["statusInfo"]);
                 console.log("Palabra: "+q.queryStr);
-                console.log("Url:"+url);
-                done();
+                console.log("Url:"+url);*/
+                var searchResult = new SearchResult();
+                searchResult.value = value;
+                searchResult.query = q._id;
+                searchResult.keyData = keyDataId;
+                searchResult.urlResult = url;
+                searchResult.titleResult = title;
+                searchResult.language = response["language"];
+                searchResult.score = 0;
+                searchResult.sentimentalResult = "neutral";
+                searchResult.analysisDate = new Date();
+                searchResult.dataDate = date;
+                searchResult.save(); 
               }
             });
           } else {
@@ -214,6 +225,7 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
   var iDate = new Date(initDate);
   iDate.setHours(0,0,0,0);
   var eDate = new Date(endDate);
+  eDate.setDate(eDate.getDate()+1);
   eDate.setHours(0,0,0,0);
   var result = [];
   var days = [];
