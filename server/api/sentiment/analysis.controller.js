@@ -53,6 +53,8 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
   var now = new Date();
 
+  return;
+
   console.log("["+now+"]. Analizando RSS "+urlRss);
 
   var FeedParser = require('feedparser')
@@ -154,9 +156,9 @@ function parseDataRss(keyDataId, data, url, title, date, value, query, done){
             var alchemyapi = new AlchemyAPI();
             alchemyapi.sentiment_targeted("text", cleanText, q.queryStr, {}, function(response) {
               if (response["status"] === "OK"){
-                console.log("Fin Analisis con AlchemyAPI: "+q.queryStr);
-                console.log("Sentiment: " + response["docSentiment"]["type"]);
-                console.log("Score    : " + response["docSentiment"]["score"]);
+                //console.log("Fin Analisis con AlchemyAPI: "+q.queryStr);
+                //console.log("Sentiment: " + response["docSentiment"]["type"]);
+                //console.log("Score    : " + response["docSentiment"]["score"]);
                 // response["docSentiment"]["type"] = [positive, negative, neutral]
                 var searchResult = new SearchResult();
                 searchResult.value = value;
@@ -182,9 +184,9 @@ function parseDataRss(keyDataId, data, url, title, date, value, query, done){
               }
             });
           } else {
-            console.log("Resultado encontrado en BBDD: "+q.queryStr);
-            console.log("Sentiment: " + resultFound.sentimentalResult);
-            console.log("Score    : " + resultFound.score);
+            //console.log("Resultado encontrado en BBDD: "+q.queryStr);
+            //console.log("Sentiment: " + resultFound.sentimentalResult);
+            //console.log("Score    : " + resultFound.score);
           }
           done();
       });
@@ -240,11 +242,11 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
         }
       }, function (err, searchR) {
         if (err) {
-          console.log("Resultado error");
+          //console.log("Resultado error");
           callback();
         }
         else if (searchR === undefined || searchR === null || searchR.length === 0) {
-          console.log("Resutado undefined");
+          //console.log("Resutado undefined");
           callback();
         } else {
           var data = {};
@@ -285,8 +287,8 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
         console.log('A file failed to process');
       } else {
         arrayResult = arrayResult.concat(result);
-        console.log("Pepeeeee");
-        console.log(arrayResult);
+        //console.log("Pepeeeee");
+        //console.log(arrayResult);
         callbackB();
       }
     });
@@ -301,35 +303,35 @@ function getDataByQueryId (callbackB, queryId, initDate, endDate) {
  */ 
 exports.sentimentalAnalysis = function(req, res) {
 
-  console.log("Sentimental Analysis: ");
-  console.log(req.query);
+  //console.log("Sentimental Analysis: ");
+  //console.log(req.query);
 
   arrayResult = [];
 
   Value.findOne({ name : req.query.valueName}, function(err, value) {
-    console.log("Value:");
-    console.log(value);
+    //console.log("Value:");
+    //console.log(value);
     UserValue.find({ value : value._id} , function (err, uservalues) {
       if ((uservalues !== null) && (uservalues !== undefined)){
         async.eachSeries(uservalues, function(uservalue, callbackUV) {
           async.eachSeries(uservalue.query, function(query, callback) {
             //console.log("Calllll");
-            console.log("GetDataByQuery: ");
-            console.log(query);
+            //console.log("GetDataByQuery: ");
+            //console.log(query);
             getDataByQueryId(callback, query, req.query.init_date, req.query.end_date);
           }, function(err){
-            console.log("Error 1");
+            //console.log("Error 1");
             //console.log("--" + arrayResult);
             callbackUV();
           });
        }, function(err){
-          console.log("Error 2");
+          //console.log("Error 2");
             //console.log("--" + arrayResult);
             res.json(200, arrayResult);
        });
       } else {
-          console.log("SentimentalAnalysis: ");
-          console.log(arrayResult);
+          //console.log("SentimentalAnalysis: ");
+          //console.log(arrayResult);
           res.json(200, arrayResult);
       }
     });  

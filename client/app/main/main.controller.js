@@ -69,13 +69,13 @@ angular.module('finsentaApp')
             setTimeout(function() {
               animateNumber();
               liveTile();
-            }, 2000);
+            }, 1500);
         });
       } else {
           setTimeout(function() {
             animateNumber();
             liveTile();
-          }, 2000);
+          }, 1500);
       }
       
     });
@@ -85,38 +85,25 @@ angular.module('finsentaApp')
         var lastDate = quotes[quotes.length-1].date;
         var firstDate = quotes[0].date;
         $http.get('/api/sentiment/sentimental', { params: { 'valueName': companyID, 'init_date': firstDate, 'end_date': lastDate }}).success(function(sentimentalData) {
-            console.log("Sentimental ok");
 
             $scope.sentimentalData = sentimentalData;
-
-            /*for (var i in tweets.statuses){
-              var url = urlTweet+tweets.statuses[i].id_str;
-              console.log(tweets.statuses[i].text);
-            }*/
 
             var stock = [];
             var positiveActions = [];
             var negativeActions = [];
             var neutralActions = [];
+            var holderActions = [];
             var minimumStock = 99999;
             var maximumStock = 0;
 
-            var numPositives = 0;
-            var numNegatives = 0;
-            var numNeutrals = 0;
-
-            var min = 10000
-            var max = 0
-            var minScore = 10000
-            var maxScore = 0
             var maxValues = 1
-            var score = 0;
+
             for (var j in quotes) {
-              if (quotes[j].close < min) {
-                min = quotes[j].close - 1;
+              if (quotes[j].close < minimumStock) {
+                minimumStock = quotes[j].close;
               }
-              if (quotes[j].close > max) {
-                max = quotes[j].close + 1;
+              if (quotes[j].close > maximumStock) {
+                maximumStock = quotes[j].close;
               }
 
               var newSearch = searchInfoDataByDate(sentimentalData, new Date(quotes[j].date));
@@ -126,35 +113,10 @@ angular.module('finsentaApp')
                 }
               }  
 
-              score = searchPositiveScoreByDate(sentimentalData, new Date(quotes[j].date));
-              if (score < minScore) {
-                minScore = score;
-              }
-              if (score > maxScore) {
-                maxScore = score;
-              }
             };
-            min = min;
-            max = max;
-  
-            console.log("Max: " + max);
-            console.log("Min: " + min);
-            var range = max - min;
-            console.log("Range: " + range);
-            var valueMention = range / maxValues;
-            console.log("Value of one: " + valueMention)
-
-            var numNeutrals = Math.floor(min);
-            var numPositives = Math.floor(min);
-            var numNegatives = Math.floor(min);
 
             for (var i in quotes){
-              if (minimumStock > quotes[i].close){
-                minimumStock = quotes[i].close;
-              }
-              if (maximumStock < quotes[i].close){
-                maximumStock = quotes[i].close;
-              }
+
               stock.push([(new Date(quotes[i].date)).getTime(), quotes[i].close]);
 
               var valueNeutrals = 0;
@@ -166,18 +128,21 @@ angular.module('finsentaApp')
                 valueNeutrals = newSearch.neutrals;
                 valuePositives = newSearch.positives;
                 valueNegatives = newSearch.negatives; 
-                numNeutrals += newSearch.neutrals;
-                numPositives += newSearch.positives;
-                numNegatives += newSearch.negatives;
               }  
 
               var scoreP = searchPositiveScoreByDate(sentimentalData, new Date(quotes[i].date));
               var scoreN = searchNegativeScoreByDate(sentimentalData, new Date(quotes[i].date));
+
+              console.log("MV: "+maxValues+"|MS: "+maximumStock+"|Close: "+quotes[i].close+"|S-VP: "+scoreP+"-"+valuePositives+"|S-VN: "+scoreN+"-"+valueNegatives+"|N: "+valueNeutrals);
+              var ret = calculateValueWeighted(maxValues, minimumStock, maximumStock, quotes[i].close, (scoreP+valuePositives), (scoreN+valueNegatives), valueNeutrals);
+              console.log("Hola: "+ret.positives+":"+ret.negatives+":"+ret.neutrals);
+              
               
 
-              positiveActions.push([(new Date(quotes[i].date)).getTime(), valueMention * (scoreP + valuePositives)]);
-              negativeActions.push([(new Date(quotes[i].date)).getTime(), valueMention * (scoreN + valueNegatives)]);
-              neutralActions.push([(new Date(quotes[i].date)).getTime(), valueMention * valueNeutrals]);
+              positiveActions.push([(new Date(quotes[i].date)).getTime(), ret.positives]);
+              negativeActions.push([(new Date(quotes[i].date)).getTime(), ret.negatives]);
+              neutralActions.push([(new Date(quotes[i].date)).getTime(), ret.neutrals]);
+              holderActions.push([(new Date(quotes[i].date)).getTime(), minimumStock]);
             }
 
             Highcharts.setOptions({
@@ -212,7 +177,7 @@ angular.module('finsentaApp')
                 },
 
                 rangeSelector : {
-                    enabled: true
+                    enabled: false
                 },
 
                 title : {
@@ -229,22 +194,22 @@ angular.module('finsentaApp')
                     title: {
                         text: 'Stock Cotization'
                     },
-                    min: minimumStock,
-                    max: maximumStock
+                    min: minimumStock-1,
+                    max: maximumStock+1
                 },
 
-                series : [{
-                            name : 'Close',
-                            data : stock,
-                            tooltip: {
-                                valueDecimals: 4
-                            }
-                          },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal'
+                    }
+                },
+
+                series : [
                           {
                             type: 'column',
                             name: 'Positive Actions',
                             data: positiveActions,
-                            color: '#5fc75f',
+                            color: '#67a689',
                             tooltip: {
                                 valueDecimals: 2
                             }
@@ -253,7 +218,7 @@ angular.module('finsentaApp')
                             type: 'column',
                             name: 'Neutral Actions',
                             data: neutralActions,
-                            color: '#FFA500',
+                            color: '#9ac8f4',
                             tooltip: {
                                 valueDecimals: 2
                             }
@@ -262,24 +227,39 @@ angular.module('finsentaApp')
                             type: 'column',
                             name: 'Negative Actions',
                             data: negativeActions,
-                            color: '#bf2600',
+                            color: '#c75757',
                             tooltip: {
                                 valueDecimals: 2
                             }
-                          }]
+                          },
+                          {
+                            showInLegend: false, 
+                            type: 'column',
+                            data: holderActions,
+                            color: "rgba(255,255,255,0)",
+                            enableMouseTracking: false
+                          },
+                          {
+                            name : 'Close',
+                            data : stock,
+                            tooltip: {
+                                valueDecimals: 4
+                            }
+                          }
+                          ]
             });
         });
       });
   }
 
-    function searchInfoByDate(arr, date) {
+    /*function searchInfoByDate(arr, date) {
       for (var i = arr.length - 1; i >= 0; i--) {
         var mDate = new Date(arr[i].date);
         if (areEquals(date, mDate)) {
           return arr[i].value;
         }
       }
-    }
+    }*/
 
     function searchPositiveScoreByDate(arr, date) {
       if (arr != null) { 
@@ -315,6 +295,30 @@ angular.module('finsentaApp')
         };
       }
       return undefined;
+    }
+
+    function calculateValueWeighted(maxValues, minStock, maxStock, stock, pos, neg, neu){
+      var ret = {};
+      var totalValue = pos+neg+neu;
+      var weightValue = totalValue/maxValues;
+      var range = maxStock-minStock;
+      if (pos === 0){
+        ret.positives = 0;
+      } else {
+        ret.positives = ((pos/totalValue)*range)*weightValue;
+      }
+      if (neg === 0){
+        ret.negatives = 0;
+      } else {
+        ret.negatives = ((neg/totalValue)*range)*weightValue;
+      }
+      if (neu === 0){
+        ret.neutrals = 0;
+      } else {
+        ret.neutrals = ((neu/totalValue)*range)*weightValue;
+      }
+        
+      return ret;
     }
 
     function areEquals(date1, date2) {

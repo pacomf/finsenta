@@ -26,5 +26,7 @@ exports.init = function(app){
 	//ScheduleController.scheduleRss();
 
 	//ScheduleController.loadJobs();
-	ScheduleController.loadTwitter();
+	ScheduleController.loadTwitterMock();
+
+	//ScheduleController.loadTwitter();
 }

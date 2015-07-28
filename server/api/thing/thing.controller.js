@@ -20,7 +20,7 @@ var yahooFinance = require('yahoo-finance');
 exports.quote = function(req, res) {
   yahooFinance.historical({
     symbol: req.params.id,
-    from: '2010-07-01',
+    from: '2015-07-01',
     to: formatDate(new Date()),
     // period: 'd'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only)
   }, function (err, quotes) {

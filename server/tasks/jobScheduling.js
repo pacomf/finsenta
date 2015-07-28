@@ -76,7 +76,9 @@ var client = new twitter({
   access_token_secret: 'ihm3MHXD7AWj9fbnKgXDd5WxEHJ4V5aGCEvul8iduEzNm'
 });
 
-function searchTweets (value, keyword, done){
+exports.loadTwitterMock = function (){
+
+	var value = "IDR.MC";
 
 	var tweetsMock = [];
 	var tMock = {"text":"Esto es un tweet de prueba",
@@ -143,12 +145,14 @@ function searchTweets (value, keyword, done){
 	}
 	//console.log(U.lastTweetInfo);
 
-	done();
 	return;
+}
+
+function searchTweets (value, keyword, done){
 
 	client.get('search/tweets', {q: keyword}, function(error, tweets, response){
 		if (error){
-			console.log("Error Twitter: "+error.name+"|"+error.message+"t: "+tweets);
+			console.log("Error Twitter: "+error.name+"|"+error.message+". Tweets: "+tweets);
 			done();
 			return;
 		}
@@ -228,7 +232,7 @@ exports.loadTwitter = function(){
 			});
 		};
 		agenda.define('updateParamsTwitter', function(job, done) {
-			console.log("Seteando numero total de Tweets");
+			//console.log("Seteando numero total de Tweets");
 			for (var key in U.lastTweetInfo){
 				U.lastTweetInfo[key].num = 0;
 			}
