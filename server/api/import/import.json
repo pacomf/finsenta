@@ -159,7 +159,7 @@
 		 "index": "^IBEX",
 		 "query":[
 		 	{"keywords":[
-		 		{"name": "caixa"}
+		 		{"name": "caixabank"}
 		 	  ],
 		 	 "keygroup":"1"
 		 	}
@@ -169,7 +169,7 @@
 		 "index": "^IBEX",
 		 "query":[
 		 	{"keywords":[
-		 		{"name": "supermercado dia"}
+		 		{"name": "supermercados dia"}
 		 	 ],
 		 	 "keygroup":"1"
 		 	}
@@ -379,7 +379,7 @@
 		 "index": "^IBEX",
 		 "query":[
 		 	{"keywords":[
-		 		{"name": "tecnicas reunidas"}
+		 		{"name": "técnicas reunidas"}
 		 	  ],
 		 	 "keygroup":"1"
 		 	}
