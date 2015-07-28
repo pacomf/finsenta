@@ -142,7 +142,7 @@ function parseDataRss(keyDataId, data, url, title, date, value, query, done){
       }, function(err, resultFound) {
           if (resultFound === null || resultFound === undefined) {
             var now = new Date();
-            if ((config.alchemyLimit === config.maxAlchemyLimit) && (areEqualsDate(now, config.lastDateAnalysis))){
+            /*if ((config.alchemyLimit === config.maxAlchemyLimit) && (areEqualsDate(now, config.lastDateAnalysis))){
               console.log("Limite interno alcanzado de consulta a AlchemyAPI");
               done();
               return;
@@ -151,7 +151,7 @@ function parseDataRss(keyDataId, data, url, title, date, value, query, done){
                config.alchemyLimit=0;
             }
             config.alchemyLimit++;
-            config.lastDateAnalysis =  new Date();
+            config.lastDateAnalysis =  new Date();*/
             var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
             var alchemyapi = new AlchemyAPI();
             alchemyapi.sentiment_targeted("text", cleanText, q.queryStr, {}, function(response) {
