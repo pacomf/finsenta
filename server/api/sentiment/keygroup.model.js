@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var KeyGroup = new Schema({
   type : String,
-  keyData:  [ { type : Schema.Types.ObjectId, ref : 'KeyGroup' } ]
+  keyData:  [ { type : Schema.Types.ObjectId, ref : 'KeyData' } ]
 });
 
 module.exports = mongoose.model('KeyGroup', KeyGroup);

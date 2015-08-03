@@ -1,5 +1,47 @@
 {
 	"keydata" : [
+
+		{"url": "http://feeds.feedburner.com/Stocktrading101",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://feeds.feedburner.com/VixAndMore",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://seekingalpha.com/feed.xml",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://seekingalpha.com/market_currents.xml",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://www.dailymail.co.uk/money/articles.rss",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://feeds.reuters.com/reuters/businessNews",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://www.ft.com/rss/home/uk",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://rss.cnn.com/rss/money_topstories.rss",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://www.cnbc.com/id/10000664/device/rss",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://www.consumerfinance.gov/feed/",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://www.efeempresas.com/?feed=rss&post_type=noticia",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "https://es.finance.yahoo.com/noticias/todas/?format=rss",
+		 "group" : "1",
+		 "weight": 0.5},
+		{"url": "http://www.bolsamania.com/rss/generarRss2.php",
+		 "group" : "1",
+		 "weight": 0.5},
+
+
 		{"url": "http://www.elblogsalmon.com/index.xml",
 		 "group" : "1",
 		 "weight": 0.5},
@@ -47,11 +89,6 @@
 		 		{"name": "inditex"}
 		 	 ],
 		 	 "keygroup":"1"
-		 	},
-		 	{"keywords":[
-		 		{"name": "amancio ortega"}
-		 	 ],
-		 	"keygroup":"1"
 		 	}
 		 ]},
 		 {"name": "IDR.MC",

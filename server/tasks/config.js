@@ -19,14 +19,14 @@ exports.init = function(app){
     // 3) loadJobs
 
 
-	//ImportController.importData('./import.json');
+	ImportController.importData('./import.json');
 
 	// OJO: Cuidado con esto que si hacemos un 'grunt serve' al estar modificando el fichero .json,
 	// recargara de forma infinita el sistema. Ejecutar y cuando salga mensajito de Jobs creados, parar.
 	//ScheduleController.scheduleRss();
 
 	//ScheduleController.loadJobs();
-	ScheduleController.loadTwitterMock();
+	//ScheduleController.loadTwitterMock();
 
 	//ScheduleController.loadTwitter();
 }

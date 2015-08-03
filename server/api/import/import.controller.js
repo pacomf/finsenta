@@ -111,31 +111,47 @@ function importUserValue(query, value, callback){
 	async.eachSeries(query, function(queryData, callbackQ){
 		var group = queryData.keygroup;
 		var keywords = queryData.keywords;
-		KeyGroup.findOne({"type":group}, function(err, kg){
-			if ((kg !== null) && (kg !== undefined)){
-				var userValue = new UserValue();
-				userValue.value = value._id;
-				userValue.query = [];
-				userValue.keyGroup = kg._id;
-				async.eachSeries(keywords, function(keyword, callbackK){
-					Query.findOne({"queryStr":keyword.name}, function(err, q){
-						if ((q === null) || (q === undefined)){
-							q = new Query();
-							q.queryStr = keyword.name;
-							q.save();
+		var queryIds = [];
+		async.eachSeries(keywords, function(keyword, callbackKS){
+			Query.findOne({"queryStr":keyword.name}, function(err, q){
+				if ((q !== null) && (q !== undefined)){
+					queryIds.push(q._id);
+				}
+				callbackKS();
+			});
+		}, function(err){
+		    KeyGroup.findOne({"type":group}, function(err, kg){
+				if ((kg !== null) && (kg !== undefined)){
+					UserValue.find({"value":value._id, "keyGroup": kg._id}, function (err, uvs){
+						if (!searchSameQueryInUserValue(uvs, queryIds)){
+							var userValue = new UserValue();
+							userValue.value = value._id;
+							userValue.query = [];
+							userValue.keyGroup = kg._id;
+							async.eachSeries(keywords, function(keyword, callbackK){
+								Query.findOne({"queryStr":keyword.name}, function(err, q){
+									if ((q === null) || (q === undefined)){
+										q = new Query();
+										q.queryStr = keyword.name;
+										q.save();
+									}
+									userValue.query.push(q._id);
+									userValue.save(function(err, product, numberAffected){
+								 		callbackK();
+								 	}); 
+								});
+							}, function(err){
+							    callbackQ();
+							}); 
+						} else {
+							callbackQ();
 						}
-						userValue.query.push(q._id);
-						userValue.save(function(err, product, numberAffected){
-					 		callbackK();
-					 	}); 
 					});
-				}, function(err){
-				    callbackQ();
-				}); 
-			} else {
-				callbackQ();
-			}
-		});
+				} else {
+					callbackQ();
+				}
+			});
+		}); 
 	}, function(err){
 	    callback();
 	});
@@ -148,4 +164,25 @@ function searchObjectInArray(arr, value) {
     }
   }
   return false;
+}
+
+function searchSameQueryInUserValue(userValues, queries) {
+	if ((userValues === null) || (userValues === undefined)){
+		return false;
+	}
+	for (var k = userValues.length - 1; k >= 0; k--) {
+	  var find = 0;
+	  for (var i = queries.length - 1; i >= 0; i--) {
+	  	for (var j=0; j<userValues[k].query.length; j++) {
+		    if (userValues[k].query[j].toString() === queries[i].toString()){
+		    	find++;
+		    }
+		}
+	  }
+	  // TODO: ¿Controlar tambien que sea el mismo userValue.query que queries?, o sea que no haya query de más en UserValues
+	  // Para eso solo añadir otra condicion al if: (queries.length === userValues[k].query.length)
+	  if ((find === queries.length) && (queries.length > 0))
+	  	return true;
+	}
+	return false;
 }
