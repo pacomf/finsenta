@@ -69,7 +69,7 @@ exports.loadJobs = function(){
   		};
   		agenda.start();
   		console.log("Jobs creados!");
-  		loadTwitter();
+  		this.loadTwitter();
 	})
 	
 }
