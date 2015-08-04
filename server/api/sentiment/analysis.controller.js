@@ -63,16 +63,20 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
           while (item = stream.read()) {
             if ((item !== null) && (item !== undefined)){
-                //var description = item.description;
+                var description = item.description;
                 var link = item.link;
                 var date = new Date(item.date);
                 var thresholdDate = new Date();
                 var title = item.title;
                 thresholdDate.setDate(thresholdDate.getDate() - 15);
                 if (date > thresholdDate) {
+                  var dataFilter = title;
+                  if ((description !== undefined) && (description !== null)){
+                    dataFilter = dataFilter+"\n"+description;
+                  }
                   async.eachSeries(userValues, function(userValue, callbackUV) {
                     async.eachSeries(userValue.query, function(query, callbackQ) {
-                      parseDataRss(keyDataId, link, title, date, userValue.value, query, done);
+                      parseDataRss(keyDataId, dataFilter, link, title, date, userValue.value, query, done);
                       callbackQ();
                     }, function(err){
                       callbackUV();
@@ -91,46 +95,27 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
 }
 
-function parseDataRss(keyDataId, url, title, date, value, query, done){
+function parseDataRss(keyDataId, dataFilter, url, title, date, value, query, done){
   Query.findById(query, function (err, q) {
     //console.log("Leyendo para: "+q.queryStr+" ("+value+"). = "+url);
 
-    // TODO: Comprobar si el q.queryStr esta en la web (URL) para no desperdiciar consultas a AlchemyAPI
-
-      SearchResult.findOne({
-        'query': q._id,
-        'urlResult': url
-      }, function(err, resultFound) {
-          if (resultFound === null || resultFound === undefined) {
-            var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
-            var alchemyapi = new AlchemyAPI();
-            alchemyapi.sentiment_targeted("url", url, q.queryStr, {}, function(response) {
-              if (response["status"] === "OK"){
-                //console.log("Fin Analisis con AlchemyAPI: "+q.queryStr);
-                //console.log("Sentiment: " + response["docSentiment"]["type"]);
-                //console.log("Score    : " + response["docSentiment"]["score"]);
-                // response["docSentiment"]["type"] = [positive, negative, neutral]
-                var searchResult = new SearchResult();
-                searchResult.value = value;
-                searchResult.query = q._id;
-                searchResult.keyData = keyDataId;
-                searchResult.urlResult = url;
-                searchResult.titleResult = title;
-                searchResult.language = response["language"];
-                if (response["docSentiment"]["score"] === undefined){
-                  searchResult.score = 0;
-                } else {
-                  searchResult.score = response["docSentiment"]["score"];
-                }
-                searchResult.sentimentalResult = response["docSentiment"]["type"];
-                searchResult.analysisDate = new Date();
-                searchResult.dataDate = date;
-                searchResult.save(); 
-              } else {
-                /*console.log("ERROR AlchemyAPI: "+response["statusInfo"]);
-                console.log("Palabra: "+q.queryStr);
-                console.log("Url:"+url);*/
-                if (response["statusInfo"] !== "daily-transaction-limit-exceeded"){
+    // Comprueba si el q.queryStr esta en la noticia (dataFilter = title+description del RSS) para no desperdiciar consultas a AlchemyAPI
+    var cleanText = dataFilter.replace(/<\/?[^>]+(>|$)/g, "");
+    var reSearch = new RegExp(q.queryStr, "i");
+    if (cleanText.search(reSearch) !== -1){
+        SearchResult.findOne({
+          'query': q._id,
+          'urlResult': url
+        }, function(err, resultFound) {
+            if (resultFound === null || resultFound === undefined) {
+              var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
+              var alchemyapi = new AlchemyAPI();
+              alchemyapi.sentiment_targeted("url", url, q.queryStr, {}, function(response) {
+                if (response["status"] === "OK"){
+                  //console.log("Fin Analisis con AlchemyAPI: "+q.queryStr);
+                  //console.log("Sentiment: " + response["docSentiment"]["type"]);
+                  //console.log("Score    : " + response["docSentiment"]["score"]);
+                  // response["docSentiment"]["type"] = [positive, negative, neutral]
                   var searchResult = new SearchResult();
                   searchResult.value = value;
                   searchResult.query = q._id;
@@ -138,21 +123,45 @@ function parseDataRss(keyDataId, url, title, date, value, query, done){
                   searchResult.urlResult = url;
                   searchResult.titleResult = title;
                   searchResult.language = response["language"];
-                  searchResult.score = 0;
-                  searchResult.sentimentalResult = "neutral";
+                  if (response["docSentiment"]["score"] === undefined){
+                    searchResult.score = 0;
+                  } else {
+                    searchResult.score = response["docSentiment"]["score"];
+                  }
+                  searchResult.sentimentalResult = response["docSentiment"]["type"];
                   searchResult.analysisDate = new Date();
                   searchResult.dataDate = date;
-                  searchResult.save();
+                  searchResult.save(); 
+                } else {
+                  /*console.log("ERROR AlchemyAPI: "+response["statusInfo"]);
+                  console.log("Palabra: "+q.queryStr);
+                  console.log("Url:"+url);*/
+                  if (response["statusInfo"] !== "daily-transaction-limit-exceeded"){
+                    var searchResult = new SearchResult();
+                    searchResult.value = value;
+                    searchResult.query = q._id;
+                    searchResult.keyData = keyDataId;
+                    searchResult.urlResult = url;
+                    searchResult.titleResult = title;
+                    searchResult.language = response["language"];
+                    searchResult.score = 0;
+                    searchResult.sentimentalResult = "neutral";
+                    searchResult.analysisDate = new Date();
+                    searchResult.dataDate = date;
+                    searchResult.save();
+                  }
                 }
-              }
-            });
-          } else {
-            //console.log("Resultado encontrado en BBDD: "+q.queryStr);
-            //console.log("Sentiment: " + resultFound.sentimentalResult);
-            //console.log("Score    : " + resultFound.score);
-          }
-          done();
-      });
+              });
+            } else {
+              //console.log("Resultado encontrado en BBDD: "+q.queryStr);
+              //console.log("Sentiment: " + resultFound.sentimentalResult);
+              //console.log("Score    : " + resultFound.score);
+            }
+            done();
+        });
+     } else {
+        done();
+     }
   });
 }
 
