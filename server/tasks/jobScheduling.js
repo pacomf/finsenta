@@ -9,9 +9,9 @@ var KeyData = require('../api/sentiment/keydata.model');
 var Value = require('../api/sentiment/value.model');
 var Query = require('../api/sentiment/query.model');
 
-var U = require('../api/sentiment/utilities');
+var config = require('./config');
 
-var mongoose = require('mongoose');
+var U = require('../api/sentiment/utilities');
 
 var async = require('async');
 
@@ -49,6 +49,12 @@ exports.loadJobs = function(){
 	// TODO, QUITAR
 	agenda.purge(function(err, numRemoved) {});
 
+	if (config.mockMode === 1){
+		console.log("Mock Mode ENABLE: Jobs Disable");
+		this.loadTwitterMock();
+		return;
+	}
+
 	agenda.define('analyzeRss', function(job, done) {
   		var data = job.attrs.data;
   		AnalysisController.readAndProcessRss(data.keyDataId, data.urlRss, done);
@@ -63,6 +69,7 @@ exports.loadJobs = function(){
   		};
   		agenda.start();
   		console.log("Jobs creados!");
+  		loadTwitter();
 	})
 	
 }
@@ -195,6 +202,13 @@ function searchTweets (value, keyword, done){
 }
 
 exports.loadTwitter = function(){
+
+	if (config.mockMode === 1){
+		console.log("Mock Mode ENABLE: Twitter Mock");
+		this.loadTwitterMock();
+		return;
+	}
+
 	var agenda = new Agenda();
 	agenda.database('localhost:27017/finsenta-jobs', 'finsentaJobs');
 	agenda._db._emitter._maxListeners = 0;

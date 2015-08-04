@@ -12,48 +12,14 @@ var U = require('./utilities');
 
 var arrayResult = [];
 
-/*exports.readRss = function (keyDataId, urlRss, value, query, done){
-  var FeedParser = require('feedparser')
-  , request = require('request');
-
-  var req = request(urlRss)
-  , feedparser = new FeedParser();
-
-  req.on('error', function (error) {
-    // handle any request errors
-  });
-  req.on('response', function (res) {
-    var stream = this;
-
-    if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
-    stream.pipe(feedparser);
-  });
-
-
-  feedparser.on('error', function(error) {
-    // always handle errors
-  });
-  feedparser.on('readable', function() {
-    // This is where the action is!
-    var stream = this
-      , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-      , item;
-
-    console.log("Leyendo Blog...");
-    while (item = stream.read()) {
-      // TODO: Buscar si el analisis de la noticia ya existe en BBDD (value-query-item.link-item.date)
-      console.log("item.title");
-      //parseDataRss(keyDataId, item.description, item.link, new Date(item.date), value, query, done);
-    }
-  });
-}*/
-
 exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
-  var now = new Date();
+  if (config.mockMode === 1){
+    console.log("Mock Mode ENABLE: Read RSS Disable");
+    return;
+  }
 
-  return;
+  var now = new Date();
 
   console.log("["+now+"]. Analizando RSS "+urlRss);
 
@@ -97,28 +63,24 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
           while (item = stream.read()) {
             if ((item !== null) && (item !== undefined)){
-              var description = item.description;
-              if ((description !== null) && (description !== undefined)){
-                  var link = item.link;
-                  var date = new Date(item.date);
-                  var thresholdDate = new Date();
-                  var title = item.title;
-                  thresholdDate.setDate(thresholdDate.getDate() - 15);
-                  if (date > thresholdDate) {
-                    async.eachSeries(userValues, function(userValue, callbackUV) {
-                      async.eachSeries(userValue.query, function(query, callbackQ) {
-                        parseDataRss(keyDataId, description, link, title, date, userValue.value, query, done);
-                        callbackQ();
-                      }, function(err){
-                        callbackUV();
-                      });
-                    }, function(err){});
-                  } else {
-                    done();
-                  }
-              } else {
-                done();
-              }
+                //var description = item.description;
+                var link = item.link;
+                var date = new Date(item.date);
+                var thresholdDate = new Date();
+                var title = item.title;
+                thresholdDate.setDate(thresholdDate.getDate() - 15);
+                if (date > thresholdDate) {
+                  async.eachSeries(userValues, function(userValue, callbackUV) {
+                    async.eachSeries(userValue.query, function(query, callbackQ) {
+                      parseDataRss(keyDataId, link, title, date, userValue.value, query, done);
+                      callbackQ();
+                    }, function(err){
+                      callbackUV();
+                    });
+                  }, function(err){});
+                } else {
+                  done();
+                }
             } else {
               done();
             }
@@ -129,32 +91,20 @@ exports.readAndProcessRss = function (keyDataId, urlRss, done){
 
 }
 
-function parseDataRss(keyDataId, data, url, title, date, value, query, done){
+function parseDataRss(keyDataId, url, title, date, value, query, done){
   Query.findById(query, function (err, q) {
     //console.log("Leyendo para: "+q.queryStr+" ("+value+"). = "+url);
-    var cleanText = data.replace(/<\/?[^>]+(>|$)/g, "");
-    var reSearch = new RegExp(q.queryStr, "i");
-    if (cleanText.search(reSearch) !== -1){
+
+    // TODO: Comprobar si el q.queryStr esta en la web (URL) para no desperdiciar consultas a AlchemyAPI
 
       SearchResult.findOne({
         'query': q._id,
         'urlResult': url
       }, function(err, resultFound) {
           if (resultFound === null || resultFound === undefined) {
-            var now = new Date();
-            /*if ((config.alchemyLimit === config.maxAlchemyLimit) && (areEqualsDate(now, config.lastDateAnalysis))){
-              console.log("Limite interno alcanzado de consulta a AlchemyAPI");
-              done();
-              return;
-            } 
-            if(config.alchemyLimit === config.maxAlchemyLimit){
-               config.alchemyLimit=0;
-            }
-            config.alchemyLimit++;
-            config.lastDateAnalysis =  new Date();*/
             var AlchemyAPI = require('../../alchemyapi_node/alchemyapi');
             var alchemyapi = new AlchemyAPI();
-            alchemyapi.sentiment_targeted("text", cleanText, q.queryStr, {}, function(response) {
+            alchemyapi.sentiment_targeted("url", url, q.queryStr, {}, function(response) {
               if (response["status"] === "OK"){
                 //console.log("Fin Analisis con AlchemyAPI: "+q.queryStr);
                 //console.log("Sentiment: " + response["docSentiment"]["type"]);
@@ -201,9 +151,6 @@ function parseDataRss(keyDataId, data, url, title, date, value, query, done){
           }
           done();
       });
-    } else {
-      done();
-    }
   });
 }
 
