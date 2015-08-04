@@ -130,18 +130,20 @@ function parseDataRss(keyDataId, url, title, date, value, query, done){
                 /*console.log("ERROR AlchemyAPI: "+response["statusInfo"]);
                 console.log("Palabra: "+q.queryStr);
                 console.log("Url:"+url);*/
-                var searchResult = new SearchResult();
-                searchResult.value = value;
-                searchResult.query = q._id;
-                searchResult.keyData = keyDataId;
-                searchResult.urlResult = url;
-                searchResult.titleResult = title;
-                searchResult.language = response["language"];
-                searchResult.score = 0;
-                searchResult.sentimentalResult = "neutral";
-                searchResult.analysisDate = new Date();
-                searchResult.dataDate = date;
-                searchResult.save(); 
+                if (response["statusInfo"] !== "daily-transaction-limit-exceeded"){
+                  var searchResult = new SearchResult();
+                  searchResult.value = value;
+                  searchResult.query = q._id;
+                  searchResult.keyData = keyDataId;
+                  searchResult.urlResult = url;
+                  searchResult.titleResult = title;
+                  searchResult.language = response["language"];
+                  searchResult.score = 0;
+                  searchResult.sentimentalResult = "neutral";
+                  searchResult.analysisDate = new Date();
+                  searchResult.dataDate = date;
+                  searchResult.save();
+                }
               }
             });
           } else {
