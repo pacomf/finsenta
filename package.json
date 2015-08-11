@@ -27,7 +27,9 @@
     "agenda":"~0.6.28",
     "agenda-ui": "~0.0.7",
     "jsonfile": "~2.2.1",
-    "connect-livereload": "~0.4.1"
+    "connect-livereload": "~0.4.1",
+    "moment": "~2.10.6",
+    "json-safe-parse": "~0.0.2"
   },
   "devDependencies": {
     "grunt": "~0.4.4",

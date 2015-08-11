@@ -2,6 +2,7 @@
 
 var Agenda = require('agenda');
 var AnalysisController = require('../api/sentiment/analysis.controller');
+var TwitterController = require('../api/sentiment/twitter.controller');
 
 var UserValue = require('../api/sentiment/uservalue.model');
 var KeyGroup = require('../api/sentiment/keygroup.model');
@@ -199,6 +200,33 @@ function searchTweets (value, keyword, done){
 		done();
 	});
 
+}
+
+exports.loadTwitterIBM = function(){
+
+	var agenda = new Agenda();
+	agenda.database('localhost:27017/finsenta-jobs', 'finsentaJobs');
+	agenda._db._emitter._maxListeners = 0;
+
+	var job;
+
+	agenda.define('analyzeTwitterIBM', function(job, done) {
+		var data = job.attrs.data;
+  		var idQuery= data.idQuery;
+  		var keyword = data.keyword;
+  		TwitterController.countTweets(idQuery, keyword, done);
+	});
+
+	Query.find({}, function(err, queries){
+		if (queries !== undefined){
+			for (var j = queries.length - 1; j >= 0; j--) {
+				job = agenda.create('analyzeTwitterIBM', {idQuery:queries[j]._id, keyword:queries[j].queryStr});
+				job.repeatEvery('1 day').save();
+			};
+		}
+	});
+
+	agenda.start();
 }
 
 exports.loadTwitter = function(){

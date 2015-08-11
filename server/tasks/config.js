@@ -13,6 +13,9 @@ exports.lastDateAnalysis = null;
 
 exports.mockMode = 0;
 
+exports.userTwitterIBM = '6d6ef7ab1e0144c720edbc5a40520f77';
+exports.passTwitterIBM = 'klPS0QAtKS';
+
 exports.init = function(app){
 
 	// IMPORTANTE: PARA RELLENAR LA BBDD, HACER LOS SIGUIENTES PASOS DE FORMA SERIAL (LANZAR HACER UNO PARAR, LANZAR HACER OTRO PARAR...)
@@ -20,7 +23,7 @@ exports.init = function(app){
     // 2) scheduleRss
     // 3) loadJobs (Tambien cargar Twitter)
 
-	// Para poner el Modo Mock, y no hacer llamadas a servicios web externos con peticiones limitadas
+	// Para poner el Modo Mock, y no hacer llamadas a servicios web externos con peticiones limitadas (1=activado)
 	this.mockMode = 1;
 
 
@@ -31,4 +34,11 @@ exports.init = function(app){
 	//ScheduleController.scheduleRss();
 
 	ScheduleController.loadJobs();
+
+	// Pruebas Twitter Insights
+	//console.log("Pruebas con TWITTER");
+	//ScheduleController.loadTwitterIBM();
+	//var TwitterController = require('../api/sentiment/twitter.controller');
+	//TwitterController.detectTwitterAlert("55b56069088f7fc40a0c7f7e", "google", 0.2);
 }
+
