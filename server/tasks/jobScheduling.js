@@ -10,6 +10,8 @@ var KeyData = require('../api/sentiment/keydata.model');
 var Value = require('../api/sentiment/value.model');
 var Query = require('../api/sentiment/query.model');
 
+var myThis = require('./jobScheduling');
+
 var config = require('./config');
 
 var U = require('../api/sentiment/utilities');
@@ -70,7 +72,7 @@ exports.loadJobs = function(){
   		};
   		agenda.start();
   		console.log("Jobs creados!");
-  		this.loadTwitter();
+  		myThis.loadTwitter();
 	})
 	
 }
