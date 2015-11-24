@@ -38,7 +38,6 @@
 		 "group" : "1",
 		 "weight": 0.5},
 
-
 		{"url": "http://www.elblogsalmon.com/index.xml",
 		 "group" : "1",
 		 "weight": 0.5},
@@ -71,7 +70,1508 @@
 		 "weight": 0.5},
 		 {"url": "http://www.elmundo.com/images/rss/noticias.xml",
 		 "group" : "1",
-		 "weight": 0.5}
+		 "weight": 0.5},
+
+		{
+		    "url": "https://www.bolsasymercados.es/aspx/BME/RSS/RSS.ashx?id=esp&feed=Indices",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.bolsasymercados.es/aspx/BME/RSS/RSS.ashx?id=ing&feed=NotasPrensa",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.bolsasymercados.es/aspx/BME/RSS/RSS.ashx?id=ing&feed=Revista",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnmv.es/portal/hr/hechosrelevantes.asmx/GetNoticiasCNMV",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnmv.es/portal/RSS/RSS.asmx/GetDatos?iID=1",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnmv.es/portal/RSS/RSS.asmx/GetDatos?iID=2",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnmv.es/portal/RSS/RSS.asmx/GetDatos?iID=3",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/mercados.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/mercadoseuribor.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/mercadosrentafija.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresas.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasbanca.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresastmt.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresastransporte.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasdeporte.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasinmobiliario.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasdistribucion.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasmotor.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasdigitech.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasauto-industria.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/empresasenergia.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://expansion.feedsportal.com/rss/economia.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.elconfidencial.com/mercados/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.elconfidencial.com/economia/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.elconfidencial.com/empresas/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.elconfidencial.com/mercados/finanzas-personales/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.elconfidencial.com/vivienda/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.elconfidencial.com/mercados/fondos-de-inversion/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.invertia.com/rss/rss-portada-invertia.asp",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.invertia.com/rss/rss-portada-alminuto-invertia.asp",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.invertia.com/rss/rss-portada-mercados-invertia.asp",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.invertia.com/rss/rss-portada-noticias-invertia.asp",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.invertia.com/rss/rss-portada-empresas-invertia.asp",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://cincodias.com/tag/rss/ibex_35/a/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://cincodias.com/rss/cincodias/mercados.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://cincodias.com/rss/tags/ultimas_noticias.xm",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://cincodias.com/tag/rss/opinion/a",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.bolsamania.com/rss/generarRss2.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://es.investing.com/rss/market_overview.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://es.investing.com/rss/forex.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://es.investing.com/rss/news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://es.investing.com/rss/stock.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://es.investing.com/rss/commodities.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://es.investing.com/rss/bonds.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://es.investing.com/rss/news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/businessNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/companyNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/news/deals?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/news/economy?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/globalmarketsNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/news/hedgefunds?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/hotStocksNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/mergersNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/basicmaterialsNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/cyclicalconsumergoodsNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/USenergyNews",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/financialsNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/environment?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/UShealthcareNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/industrialsNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/noncyclicalconsumergoodsNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/technologysectorNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.reuters.com/reuters/utilitiesNews?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.economiadigital.es/es/rss/rss-general-de-economiadigital.es-006.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-emprendedores.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-flash-del-mercado.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-seleccion-ee.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-empresas.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-mercados.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-economia.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-category.php?category=tecnologia",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-fondos.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.eleconomista.es/rss/rss-gestion.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.diarioabierto.es/cat/bolsa/feed",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.diarioabierto.es/cat/economia/feed",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.diarioabierto.es/cat/empresas/feed",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.diarioabierto.es/cat/finanzas/feed",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.economiadehoy.com/rss/3-empresas/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.economiadehoy.com/rss/1-portada/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.elboletin.com/rss_economia.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.elboletin.com/rss_hoyenlared.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.elboletin.com/rss_mercados.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.elmundofinanciero.com/rss/ultimasnoticias.asp",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.elmundofinanciero.com/rss/seccion.asp?ref=20",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.elmundofinanciero.com/rss/seccion.asp?ref=21",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://empresaexterior.com/rss.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.finanzas.com/rss/noticiasportada.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/libertaddigital/economia?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.megabolsa.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.infomercados.com/rss/infomercados.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/morningstar/glkd",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/morningstar/BMYH?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.capitalbolsa.com/rss.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.4-traders.com/rss/FeedNews.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/Rankia",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://inbestia.com/blogs/blogs",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://inbestia.com/blogs/noticias",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://inbestia.com/blogs/diariostrading",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.gurufocus.com/rss.php",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://seekingalpha.com/feed.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://seekingalpha.com/tag/short-ideas.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://seekingalpha.com/tag/transcripts.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://seekingalpha.com/market_currents.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://seekingalpha.com/listing/most-popular-articles.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.estrategiasdeinversion.com/rss/rssout.php?canal=29&perPage=10",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.estrategiasdeinversion.com/rss/rssout.php?canal=21&perPage=10",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/EsBolsaBlog?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.efinancialnews.com/privateequity/deals/rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.efinancialnews.com/investmentbanking/capital-markets/rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.efinancialnews.com/investmentbanking/sales-and-trading/rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.ceoe.es/rss.wbe?fid=41",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/cnmcblogES?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://ep00.epimg.net/rss/economia/portada.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.abc.es/rss/feeds/abc_EconomiaEconomia.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.abc.es/rss/feeds/abc_Economia.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.larazon.es/rss/economia.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/lavanguardia/economia",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.nuevatribuna.es/rss/economia",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.ultimahora.com/rss/Economia.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.20minutos.com/rss/economia/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.quefondos.com/es/rss.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.fundspeople.com/rss/rss.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.rtve.es/rss/temas_economia.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cope.es//Menu/Actualidad/Economia/rss.xml?componente=19&seccion=1143&idioma=es_ES",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cope.es//Menu/Actualidad/Mundo/rss.xml?componente=19&seccion=1142&idioma=es_ES",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://cadenaser.com/rss/ser/portada.xml/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.theglobeandmail.com/report-on-business/economy/?service=rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.theglobeandmail.com/report-on-business/industry-news/?service=rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.theglobeandmail.com/report-on-business/small-business/?service=rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://economictimes.indiatimes.com/rssfeeds/2143429.cms",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://economictimes.indiatimes.com/Markets/markets/rssfeeds/1977021501.cms",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://economictimes.indiatimes.com/rssfeeds/13352306.cms",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://economictimes.indiatimes.com/rssfeeds/2146842.cms",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://economictimes.indiatimes.com/rssfeeds/12872390.cms",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://economictimes.indiatimes.com/rssfeeds/858478126.cms",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://economictimes.indiatimes.com/rssfeeds/1373380680.cms",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.forbes.com/markets/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.forbes.com/business/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.forbes.com/markets/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.forbes.com/real-time/feed2/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.economist.com/sections/business-finance/rss.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.economist.com/sections/international/rss.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/zerohedge/feed?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://consumerist.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.sinletter.com/?feed=rss2",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/institutionalinvestor/dQyC?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/InstitutionalInvestorBankingCapitalMarkets?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/InstitutionalInvestorInvestors?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.cnn.com/rss/money_markets.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.cnn.com/cnnmoneymorningbuzz",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.cnn.com/rss/money_smbusiness.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.cnn.com/rss/money_news_economy.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.cnn.com/rss/money_news_international.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.cnn.com/rss/money_news_companies.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.cnn.com/rss/money_latest.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://wolfstreet.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://allaboutalpha.com/blog/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.fool.com/feeds/headlines.aspx?p=foolwatch&source=iedfolrf0000001&k=qf8kICrPXPH3GvZEE386jQ",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/20910258/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/15839135/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/10001147/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/100727362/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/19836768/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/10001054/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/15839069/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/100646281/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/20409666/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cnbc.com/id/19206666/device/rss/rss.html",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds2.feedburner.com/huddler-hotstockmarket?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.thestreet.com/tsc/feeds/rss/thestreet-picks/thestreet-ratings?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/StreetauthorityArticles?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.barrons.com/xml/rss/3_7625.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.barrons.com/xml/rss/3_7543.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.barrons.com/xml/rss/3_7515.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.barrons.com/xml/rss/3_7544.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.barrons.com/xml/rss/3_7526.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://blogs.barrons.com/stockstowatchtoday/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/NakedCapitalism?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.wkrb13.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.wired.co.uk/rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://sleekmoney.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.dakotafinancialnews.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/InvestorguideSOD?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/InvestorguideWeekly?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.sec.gov/news/speeches.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.sec.gov/rss/litigation/litreleases.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.sec.gov/rss/litigation/suspensions.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.sec.gov/rss/divisions/corpfin/cfnew.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.sec.gov/rss/investor/alerts",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.sec.gov/news/pressreleases.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://apps.shareholder.com/rss/rss.aspx?channels=274&companyid=NDAQ&sh_auth=814867164.0.0.42284.cdef72d3f126b2d980163158544d1b81",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rssfeeds.usatoday.com/UsatodaycomMoney-TopStories",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rssfeeds.usatoday.com/UsatodaycomWorld-TopStories",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.businessinsider.com.au/businessinsideraustraliaau?_ga=1.168218409.982009086.1444062314",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/thedisciplinedinvestor/EBHR?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/feedburner/MLDE?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/Stocktrading101",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/dailyreckoning?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/MarketFolly?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds2.feedburner.com/MishsGlobalEconomicTrendAnalysis",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://traderfeed.blogspot.com/feeds/comments/default",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://traderfeed.blogspot.com/feeds/posts/default",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/TheBigPicture",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.bbci.co.uk/news/video_and_audio/business/rss.xml?edition=uk",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.nytimes.com/services/xml/rss/nyt/Business.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.nytimes.com/services/xml/rss/nyt/EnergyEnvironment.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.nytimes.com/services/xml/rss/nyt/Economy.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://rss.nytimes.com/services/xml/rss/nyt/InternationalBusiness.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.marketwatch.com/marketwatch/stockstowatch?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.marketwatch.com/marketwatch/software?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.marketwatch.com/marketwatch/commentary?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.marketwatch.com/marketwatch/realtimeheadlines?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/allfeaturedreports?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/EconomicEventsInterestRates?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.feedburner.com/qypc?format=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.dailynews.com/section?template=RSS&profile=4000025&mime=xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.justice.gov/feeds/opa/justice-news.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.cch.ca/rss/feeds/business.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.jbhnews.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.oracle.com/corporate/press/rss/rss-pr.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.oracle.com/ocom/groups/public/@ocom/documents/webcontent/196280.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "https://www.oracle.com/corporate/press/rss/rss-pr.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.delicious.com/v2/rss/oracleondemand?count=15",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.delicious.com/v2/rss/OracleTechnologyNetwork/otnheadlines",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://blogs.oracle.com/partnernews/feed/entries/rss?cat=Database",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://blogs.oracle.com/main/feed/entries/atom",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.financialwisdomworks.com/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.prnewswire.com/rss/all-news-releases-from-PR-newswire-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.investorideas.com/RSS/feeds/Stocks-Submission.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.investorideas.com/RSS/feeds/IIMAIN.xml",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.proactiveinvestors.com.au/companies/rss/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.proactiveinvestors.com/rss/newswires",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.proactiveinvestors.com/rss/columns",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.proactiveinvestors.com/rss/interviews",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.proactiveinvestors.com/rss/presentations",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.proactiveinvestors.com/rss/articles",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.newswire.ca/rss/business-technology/all-business-technology-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.newswire.ca/rss/consumer-products-retail/all-consumer-products-retail-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.newswire.ca/rss/consumer-technology/all-consumer-technology-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.newswire.ca/rss/energy/all-energy-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.newswire.ca/rss/entertainment-media/all-entertainment-media-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.newswire.ca/rss/financial-services/all-financial-services-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://www.newswire.ca/rss/general-business/all-general-business-news.rss",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://globenewswire.com/Rss/orgclass/1",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://globenewswire.com/Rss/subjectcode/12/Dividend%20Reports%20And%20Estimates",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://globenewswire.com/Rss/subjectcode/13/Earnings%20Releases%20And%20Operating%20Results",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://globenewswire.com/Rss/subjectcode/27/Mergers%20And%20Acquisitions",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://nypost.com/business/feed/",
+		    "group": "1",
+		    "weight": 0.5
+		},
+
+		{
+		    "url": "http://feeds.washingtonpost.com/rss/business",
+		    "group": "1",
+		    "weight": 0.5
+		}
+
 	],
 	"index" : [
 		{"name": "^IBEX",
